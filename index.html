@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finc</title>
+    <title>Meu Gerenciador Financeiro</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for icons -->
@@ -19,11 +19,11 @@
         }
         .container {
             max-width: 98%; /* Wider container for more space */
-            margin: 0.2rem auto; /* Slightly increased margin */
-            padding: 0.4rem; /* Slightly increased padding */
+            margin: 0.1rem auto; /* Reduced margin */
+            padding: 0.2rem; /* Reduced padding */
             background-color: #ffffff;
-            border-radius: 12px; /* Increased border-radius */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Increased shadow */
+            border-radius: 10px; /* Slightly smaller border-radius */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow */
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -32,16 +32,16 @@
         .input-group label {
             font-weight: 500;
             color: #4a5568;
-            font-size: 0.95rem; /* Increased font for labels */
+            font-size: 0.85rem; /* Reduced font for labels */
         }
         .input-group input,
         .input-group select,
         .input-group textarea {
             width: 100%;
-            padding: 0.45rem 0.7rem; /* Slightly increased padding */
+            padding: 0.3rem 0.5rem; /* Very reduced padding */
             border: 1px solid #cbd5e0;
-            border-radius: 8px; /* Increased border-radius */
-            font-size: 0.85rem; /* Increased font */
+            border-radius: 5px; /* Very small border-radius */
+            font-size: 0.75rem; /* Even smaller font */
             transition: all 0.2s ease-in-out;
         }
         .input-group input:focus,
@@ -49,16 +49,16 @@
         .input-group textarea:focus {
             outline: none;
             border-color: #4299e1;
-            box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5); /* Increased shadow */
+            box-shadow: 0 0 0 1px rgba(66, 153, 225, 0.5); /* Very small shadow */
         }
         .btn {
-            padding: 0.6rem 1rem; /* Increased padding */
-            border-radius: 8px; /* Increased border-radius */
+            padding: 0.5rem 0.8rem; /* Reduced padding */
+            border-radius: 6px; /* Reduced border-radius */
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Increased shadow */
-            font-size: 0.95rem; /* Increased font */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+            font-size: 0.85rem; /* Reduced font */
         }
         .btn-primary {
             background-color: #4299e1;
@@ -79,31 +79,31 @@
         table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 0.4rem; /* Increased spacing */
+            border-spacing: 0 0.3rem; /* Reduced spacing */
         }
         th, td {
             text-align: left;
-            padding: 0.4rem; /* Increased padding */
-            font-size: 0.9rem; /* Increased font for table content */
+            padding: 0.3rem; /* Reduced padding */
+            font-size: 0.75rem; /* Very small font for table content */
         }
         th {
             background-color: #edf2f7;
             color: #2d3748;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85rem; /* Increased font for table header */
-            border-radius: 8px; /* Increased border-radius */
+            font-size: 0.7rem; /* Very small font for table header */
+            border-radius: 6px; /* Reduced border-radius */
         }
         td {
             background-color: #ffffff;
             border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Increased shadow */
-            border-radius: 8px; /* Increased border-radius */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Reduced shadow */
+            border-radius: 6px; /* Reduced border-radius */
         }
-        tr:first-child th:first-child { border-top-left-radius: 8px; }
-        tr:first-child th:last-child { border-top-right-radius: 8px; }
-        tr:last-child td:first-child { border-bottom-left-radius: 8px; }
-        tr:last-child td:last-child { border-bottom-right-radius: 8px; }
+        tr:first-child th:first-child { border-top-left-radius: 6px; }
+        tr:first-child th:last-child { border-top-right-radius: 6px; }
+        tr:last-child td:first-child { border-bottom-left-radius: 6px; }
+        tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 
         .modal-overlay {
             position: fixed;
@@ -119,32 +119,32 @@
         }
         .modal-content {
             background-color: white;
-            padding: 1.5rem; /* Increased padding */
-            border-radius: 12px; /* Increased border-radius */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow */
+            padding: 1.2rem; /* Reduced padding */
+            border-radius: 10px; /* Reduced border-radius */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Reduced shadow */
             text-align: center;
-            max-width: 400px; /* Increased max width */
+            max-width: 350px; /* Reduced max width */
             width: 90%;
             position: relative;
         }
         .charts-modal-content, .all-transactions-modal-content {
             background-color: white;
-            padding: 2rem; /* Increased padding */
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            max-width: 95%;
-            width: 95%;
-            max-height: 95vh;
+            padding: 1.5rem; /* Reduced padding */
+            border-radius: 10px; /* Reduced border-radius */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+            max-width: 90%; /* Reduced max width */
+            width: 90%;
+            max-height: 90vh; /* Reduced max height */
             overflow-y: auto;
             position: relative;
         }
         .modal-close-btn {
             position: absolute;
-            top: 1rem; /* Adjusted positioning */
-            right: 1rem; /* Adjusted positioning */
+            top: 0.5rem; /* Adjusted positioning */
+            right: 0.5rem; /* Adjusted positioning */
             background: none;
             border: none;
-            font-size: 1.5rem; /* Increased icon size */
+            font-size: 1.2rem; /* Reduced icon size */
             cursor: pointer;
             color: #4a5568;
         }
@@ -156,38 +156,38 @@
             position: relative;
             height: auto; /* Height auto for text */
             width: 100%;
-            margin: 0.5rem auto;
-            max-width: 300px;
+            margin: 0.4rem auto; /* Reduced margin */
+            max-width: 250px; /* Reduced max width for charts */
         }
         .percentage-list p {
-            font-size: 0.95rem; /* Slightly larger font for percentages */
-            margin-bottom: 0.25rem;
+            font-size: 0.85rem; /* Further reduced font for percentages */
+            margin-bottom: 0.2rem; /* Further reduced margin-bottom */
             color: #2d3748;
             display: flex;
             align-items: center;
             justify-content: flex-start; /* Align text to start */
         }
         .color-swatch {
-            width: 1rem;
-            height: 1rem;
-            border-radius: 0.25rem;
-            margin-right: 0.5rem;
+            width: 0.9rem; /* Further reduced size */
+            height: 0.9rem; /* Further reduced size */
+            border-radius: 0.2rem; /* Further reduced border-radius */
+            margin-right: 0.4rem; /* Further reduced margin */
             border: 1px solid rgba(0, 0, 0, 0.2);
         }
-        .category-text-colored { /* New class for colored category text in tables */
+        .category-text-colored {
             display: inline-block;
-            padding: 0.1rem 0.3rem;
+            padding: 0.1rem 0.3rem; /* Reduced padding */
             border-radius: 4px;
             font-weight: 500;
             white-space: nowrap;
         }
-        .category-item { /* For category management list */
+        .category-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 0;
+            padding: 0.5rem 0; /* Reduced padding */
             border-bottom: 1px solid #edf2f7;
-            font-size: 0.95rem;
+            font-size: 0.9rem; /* Reduced font size */
         }
         .category-item:last-child {
             border-bottom: none;
@@ -195,13 +195,13 @@
         .category-delete-btn {
             background-color: #ef4444;
             color: white;
-            border-radius: 50%; /* Make it round */
-            width: 1.5rem;
-            height: 1.5rem;
+            border-radius: 50%;
+            width: 1.4rem; /* Reduced size */
+            height: 1.4rem; /* Reduced size */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.7rem; /* Reduced font size */
             transition: background-color 0.2s ease-in-out;
         }
         .category-delete-btn:hover {
@@ -211,55 +211,59 @@
             .grid-cols-2 {
                 grid-template-columns: repeat(2, 1fr);
             }
-            /* New 2x2 grid for main content */
-            .grid-cols-2-md-dynamic {
-                grid-template-columns: repeat(2, 1fr);
+            .grid-rows-2 {
                 grid-template-rows: repeat(2, minmax(0, 1fr)); /* Explicitly define 2 equal rows */
             }
         }
     </style>
 </head>
-<body class="bg-gray-100 p-4 sm:p-6"> <!-- Increased overall body padding -->
+<body class="bg-gray-100 p-4 sm:p-6"> <!-- Reduced overall body padding -->
+        <button id="logoutButtonTopRight" class="absolute top-1 right-1 z-10 btn bg-purple-500 hover:bg-purple-600 text-xs p-1 rounded-full flex items-center justify-center" style="width: 32px; height: 32px;" title="Sair"> <!-- Adjusted size and padding -->
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+    <div id="app" class="container relative"> <!-- Added relative to container for logout button positioning -->
 
-    <div id="app" class="container">
+        <!-- Botão Sair (Logout) Fixo no Topo Direito -->
+
+
+
         <!-- Seção de Autenticação -->
-        <div id="authSection" class="bg-white p-6 rounded-xl shadow-lg mb-6 border border-purple-200"> <!-- Increased padding and mb -->
-            <h2 class="text-2xl font-semibold text-purple-700 mb-4 text-center">Autenticação</h2> <!-- Increased font size and mb -->
-            <div id="loggedInView" class="hidden">
-                <p class="text-center text-gray-700 mb-4 text-base">Bem-vindo(a), <span id="userEmail" class="font-semibold"></span>!</p> <!-- Increased mb and font size -->
-                <button id="logoutButton" class="btn btn-primary bg-purple-500 hover:bg-purple-600 w-full text-base">Sair</button> <!-- Increased font size -->
+        <div id="authSection" class="bg-white p-6 rounded-xl shadow-lg mb-6 border border-purple-200">
+            <h2 class="text-2xl font-semibold text-purple-700 mb-4 text-center">Autenticação</h2>
+            <div id="loggedInView" class="">
+                <p class="text-center text-gray-700 mb-4 text-base">Bem-vindo(a), <span id="userEmail" class="font-semibold"></span>!</p>
             </div>
-            <div id="loggedOutView">
-                <form id="loginForm" class="space-y-4 mb-6"> <!-- Increased space-y and mb -->
-                    <h3 class="text-xl font-medium text-gray-700">Fazer Login</h3> <!-- Increased font size -->
+            <div id="loggedOutView" class="hidden">
+                <form id="loginForm" class="space-y-4 mb-6">
+                    <h3 class="text-xl font-medium text-gray-700">Fazer Login</h3>
                     <div class="input-group">
-                        <label for="loginEmail" class="block text-sm">E-mail:</label>
+                        <label for="loginEmail" class="block text-base">E-mail:</label>
                         <input type="email" id="loginEmail" required
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base"> <!-- Increased mt and font size -->
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base p-2">
                     </div>
                     <div class="input-group">
-                        <label for="loginPassword" class="block text-sm">Senha:</label>
+                        <label for="loginPassword" class="block text-base">Senha:</label>
                         <input type="password" id="loginPassword" required
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base"> <!-- Increased mt and font size -->
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base p-2">
                     </div>
-                    <button type="submit" class="btn btn-primary bg-green-500 hover:bg-green-600 w-full text-base">Entrar</button> <!-- Increased font size -->
+                    <button type="submit" class="btn btn-primary bg-green-500 hover:bg-green-600 w-full text-base">Entrar</button>
                 </form>
 
-                <div class="text-center mb-6"> <!-- Increased mb -->
-                    <p class="text-gray-600 text-base">Ou</p> <!-- Increased font size -->
+                <div class="text-center mb-6">
+                    <p class="text-gray-600 text-base">Ou</p>
                 </div>
 
-                <form id="registerForm" class="space-y-4"> <!-- Increased space-y -->
-                    <h3 class="text-xl font-medium text-gray-700">Registrar-se</h3> <!-- Increased font size -->
+                <form id="registerForm" class="space-y-4">
+                    <h3 class="text-xl font-medium text-gray-700">Registrar-se</h3>
                     <div class="input-group">
-                        <label for="registerEmail" class="block text-sm">E-mail:</label>
+                        <label for="registerEmail" class="block text-base">E-mail:</label>
                         <input type="email" id="registerEmail" required
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base">
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base p-2">
                     </div>
                     <div class="input-group">
-                        <label for="registerPassword" class="block text-sm">Senha:</label>
+                        <label for="registerPassword" class="block text-base">Senha:</label>
                         <input type="password" id="registerPassword" required
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base">
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base p-2">
                     </div>
                     <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base">Registrar</button>
                 </form>
@@ -294,7 +298,7 @@
                     <div class="flex gap-3">
                         <div class="input-group flex-[3]">
                             <label for="incomeDescription" class="block text-sm">Descrição (opcional):</label>
-                            <textarea id="incomeDescription" rows="1"
+                            <textarea id="incomeDescription" rows="2"
                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base"></textarea>
                         </div>
                         <div class="input-group flex-1">
@@ -303,7 +307,7 @@
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary bg-green-500 hover:bg-green-600 w-full text-base mt-3">Adicionar Ganho</button>
+                    <button type="submit" class="btn btn-primary bg-green-500 hover:bg-green-600 w-full text-base mt-4">Adicionar Ganho</button>
                 </form>
             </div>
 
@@ -333,7 +337,7 @@
                     <div class="flex gap-3">
                         <div class="input-group flex-[3]">
                             <label for="expenseDescription" class="block text-sm">Descrição (opcional):</label>
-                            <textarea id="expenseDescription" rows="1"
+                            <textarea id="expenseDescription" rows="2"
                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base"></textarea>
                         </div>
                         <div class="input-group flex-1">
@@ -342,38 +346,38 @@
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary bg-red-500 hover:bg-red-600 w-full text-base mt-3">Adicionar Despesa</button>
+                    <button type="submit" class="btn btn-primary bg-red-500 hover:bg-red-600 w-full text-base mt-4">Adicionar Despesa</button>
                 </form>
             </div>
 
             <!-- Bloco 3 (Resumo Financeiro) - Row 2, Col 1 -->
-            <div class="bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between">
-                <h2 class="text-xl font-semibold text-gray-800 mb-3 flex items-center justify-center">
+            <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-between">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
                     <i class="fas fa-chart-pie mr-2"></i> Resumo Financeiro
                 </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center flex-grow">
-                    <div class="bg-blue-50 p-2 rounded-lg shadow-sm flex flex-col justify-center">
-                        <p class="text-gray-600 text-sm">Total Ganhos:</p>
-                        <p id="totalIncome" class="text-xl font-bold text-green-600">R$ 0.00</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center flex-grow">
+                    <div class="bg-blue-50 p-3 rounded-lg shadow-sm flex flex-col justify-center">
+                        <p class="text-gray-600 text-base">Total Ganhos:</p>
+                        <p id="totalIncome" class="text-2xl font-bold text-green-600">R$ 0.00</p>
                     </div>
-                    <div class="bg-blue-50 p-2 rounded-lg shadow-sm flex flex-col justify-center">
-                        <p class="text-gray-600 text-sm">Total Despesas:</p>
-                        <p id="totalExpenses" class="text-xl font-bold text-red-600">R$ 0.00</p>
+                    <div class="bg-blue-50 p-3 rounded-lg shadow-sm flex flex-col justify-center">
+                        <p class="text-gray-600 text-base">Total Despesas:</p>
+                        <p id="totalExpenses" class="text-2xl font-bold text-red-600">R$ 0.00</p>
                     </div>
-                    <div class="bg-blue-50 p-2 rounded-lg shadow-sm flex flex-col justify-center">
-                        <p class="text-gray-600 text-sm">Saldo Atual:</p>
-                        <p id="currentBalance" class="text-xl font-bold text-blue-600">R$ 0.00</p>
+                    <div class="bg-blue-50 p-3 rounded-lg shadow-sm flex flex-col justify-center">
+                        <p class="text-gray-600 text-base">Saldo Atual:</p>
+                        <p id="currentBalance" class="text-2xl font-bold text-blue-600">R$ 0.00</p>
                     </div>
                 </div>
-                <button id="viewChartsButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base mt-3">Ver Relatórios em Porcentagem</button>
+                <button id="viewChartsButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-lg mt-4">Ver Relatórios em Porcentagem</button>
             </div>
 
             <!-- Bloco 4 (Últimas Transações) - Row 2, Col 2 -->
-            <div class="bg-white p-4 rounded-xl shadow-lg flex flex-col flex-grow">
-                <h2 class="text-xl font-semibold text-gray-800 mb-3 flex items-center justify-center">
+            <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col flex-grow">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
                     <i class="fas fa-list-alt mr-2"></i> Últimas Transações
                 </h2>
-                <div class="overflow-y-auto text-base flex-grow"> <!-- Changed to overflow-y-auto for internal scroll -->
+                <div class="overflow-y-auto text-base flex-grow">
                     <table id="transactionsTable" class="min-w-full">
                         <thead>
                             <tr>
@@ -389,9 +393,9 @@
                             <!-- Latest 2 transactions will be inserted here by JavaScript -->
                         </tbody>
                     </table>
-                    <p id="noTransactionsMessage" class="text-center text-gray-500 mt-2 hidden text-base">Nenhuma transação registrada ainda.</p>
+                    <p id="noTransactionsMessage" class="text-center text-gray-500 mt-3 hidden text-base">Nenhuma transação registrada ainda.</p>
                 </div>
-                <button id="viewAllTransactionsButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base mt-2">Ver Todas as Transações</button>
+                <button id="viewAllTransactionsButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-lg mt-3">Ver Todas as Transações</button>
             </div>
         </div>
     </div>
@@ -406,23 +410,22 @@
 
     <!-- Add Category Modal -->
     <div id="addCategoryModal" class="modal-overlay hidden">
-        <div class="modal-content text-left"> <!-- Changed to text-left for list -->
+        <div class="modal-content text-left">
             <button class="modal-close-btn" id="closeAddCategoryModalButton"><i class="fas fa-times"></i></button>
-            <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Adicionar Categoria</h2>
-            <p id="addCategoryModalType" class="text-center text-gray-600 mb-3 text-sm"></p>
-            <div class="input-group mb-4">
-                <label for="newCategoryInput" class="block text-sm">Nome da Categoria:</label>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Adicionar Categoria</h2>
+            <p id="addCategoryModalType" class="text-center text-gray-600 mb-4 text-base"></p>
+            <div class="input-group mb-6">
+                <label for="newCategoryInput" class="block text-base">Nome da Categoria:</label>
                 <input type="text" id="newCategoryInput" placeholder="Nome da nova categoria"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 p-2 text-base">
+                       class="mt-2 block w-full rounded-md border-gray-300 shadow-sm text-lg p-3">
             </div>
-            <button id="saveNewCategoryButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base">Salvar Categoria</button>
+            <button id="saveNewCategoryButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-lg">Salvar Categoria</button>
 
-            <hr class="my-6 border-t border-gray-200"> <!-- Separator -->
+            <hr class="my-8 border-t border-gray-200">
 
-            <h3 class="text-lg font-semibold text-gray-800 mb-3 text-center">Gerenciar Categorias Personalizadas</h3>
-            <div id="customCategoriesList" class="space-y-2 max-h-40 overflow-y-auto"> <!-- Scrollable list -->
-                <!-- Custom categories will be listed here dynamically -->
-                <p id="noCustomCategoriesMessage" class="text-center text-gray-500 text-sm hidden">Nenhuma categoria personalizada adicionada ainda.</p>
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center">Gerenciar Categorias Personalizadas</h3>
+            <div id="customCategoriesList" class="space-y-3 max-h-48 overflow-y-auto">
+                <p id="noCustomCategoriesMessage" class="text-center text-gray-500 text-base hidden">Nenhuma categoria personalizada adicionada ainda.</p>
             </div>
         </div>
     </div>
@@ -430,42 +433,42 @@
     <!-- Edit Transaction Modal -->
     <div id="editModal" class="modal-overlay hidden">
         <div class="modal-content text-left">
-            <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Editar Transação</h2>
-            <form id="editForm" class="space-y-4">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Editar Transação</h2>
+            <form id="editForm" class="space-y-6">
                 <input type="hidden" id="editTransactionId">
                 <div class="input-group">
-                    <label for="editType" class="block text-sm">Tipo:</label>
+                    <label for="editType" class="block text-base">Tipo:</label>
                     <select id="editType" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base">
+                            class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg p-3">
                         <option value="income">Ganho</option>
                         <option value="expense">Despesa</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label for="editAmount" class="block text-sm">Valor:</label>
+                    <label for="editAmount" class="block text-base">Valor:</label>
                     <input type="number" id="editAmount" step="0.01" required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base">
+                           class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg p-3">
                 </div>
                 <div class="input-group">
-                    <label for="editCategory" class="block text-sm">Categoria:</label>
+                    <label for="editCategory" class="block text-base">Categoria:</label>
                     <select id="editCategory" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base">
+                            class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg p-3">
                         <!-- Options will be populated by JavaScript -->
                     </select>
                 </div>
                 <div class="input-group">
-                    <label for="editDescription" class="block text-sm">Descrição (opcional):</label>
-                    <textarea id="editDescription" rows="1"
-                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base"></textarea>
+                    <label for="editDescription" class="block text-base">Descrição (opcional):</label>
+                    <textarea id="editDescription" rows="2"
+                              class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg p-3"></textarea>
                 </div>
                 <div class="input-group">
-                    <label for="editDate" class="block text-sm">Data:</label>
+                    <label for="editDate" class="block text-base">Data:</label>
                     <input type="date" id="editDate" required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base">
+                           class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg p-3">
                 </div>
-                <div class="flex justify-end gap-4 mt-6">
-                    <button type="button" id="cancelEditButton" class="btn bg-gray-300 hover:bg-gray-400 text-gray-800 text-base">Cancelar</button>
-                    <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-600 text-base">Salvar Alterações</button>
+                <div class="flex justify-end gap-4 mt-8">
+                    <button type="button" id="cancelEditButton" class="btn bg-gray-300 hover:bg-gray-400 text-gray-800 text-lg">Cancelar</button>
+                    <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-600 text-lg">Salvar Alterações</button>
                 </div>
             </form>
         </div>
@@ -475,36 +478,36 @@
     <div id="allTransactionsModal" class="modal-overlay hidden">
         <div class="all-transactions-modal-content">
             <button class="modal-close-btn" id="closeAllTransactionsModalButton"><i class="fas fa-times"></i></button>
-            <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Todas as Transações</h2>
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Todas as Transações</h2>
 
             <!-- Filters -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
                 <div class="input-group">
-                    <label for="filterType" class="block text-sm">Tipo:</label>
-                    <select id="filterType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+                    <label for="filterType" class="block text-base">Tipo:</label>
+                    <select id="filterType" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm text-lg p-3">
                         <option value="">Todos</option>
                         <option value="income">Ganho</option>
                         <option value="expense">Despesa</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label for="filterCategory" class="block text-sm">Categoria:</label>
-                    <select id="filterCategory" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+                    <label for="filterCategory" class="block text-base">Categoria:</label>
+                    <select id="filterCategory" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm text-lg p-3">
                         <option value="">Todas</option>
                         <!-- Categories populated dynamically -->
                     </select>
                 </div>
                 <div class="input-group">
-                    <label for="filterStartDate" class="block text-sm">Data Início:</label>
-                    <input type="date" id="filterStartDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+                    <label for="filterStartDate" class="block text-base">Data Início:</label>
+                    <input type="date" id="filterStartDate" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm text-lg p-3">
                 </div>
                 <div class="input-group">
-                    <label for="filterEndDate" class="block text-sm">Data Fim:</label>
-                    <input type="date" id="filterEndDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+                    <label for="filterEndDate" class="block text-base">Data Fim:</label>
+                    <input type="date" id="filterEndDate" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm text-lg p-3">
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
+            <div class="overflow-y-auto">
                 <table id="allTransactionsTable" class="min-w-full">
                     <thead>
                         <tr>
@@ -520,7 +523,7 @@
                         <!-- All transactions will be inserted here by JavaScript -->
                     </tbody>
                 </table>
-                <p id="noFilteredTransactionsMessage" class="text-center text-gray-500 mt-2 hidden text-sm">Nenhuma transação encontrada com os filtros aplicados.</p>
+                <p id="noFilteredTransactionsMessage" class="text-center text-gray-500 mt-4 text-base hidden">Nenhuma transação encontrada com os filtros aplicados.</p>
             </div>
         </div>
     </div>
@@ -529,21 +532,21 @@
     <div id="percentageReportsModal" class="modal-overlay hidden">
         <div class="charts-modal-content">
             <button class="modal-close-btn" id="closePercentageReportsModalButton"><i class="fas fa-times"></i></button>
-            <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Relatórios em Porcentagem</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Relatórios em Porcentagem</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <h3 class="text-base font-medium text-gray-700 mb-1 text-center">Despesas por Categoria</h3>
+                    <h3 class="text-xl font-medium text-gray-700 mb-3 text-center">Despesas por Categoria</h3>
                     <div id="expenseChartContainer" class="chart-container">
                         <!-- Percentage list will be dynamically created here -->
                     </div>
-                    <p id="noExpenseDataModal" class="text-center text-gray-500 mt-0.5 hidden text-sm">Não há dados de despesas para exibir.</p>
+                    <p id="noExpenseDataModal" class="text-center text-gray-500 mt-2 text-base hidden">Não há dados de despesas para exibir.</p>
                 </div>
                 <div>
-                    <h3 class="text-base font-medium text-gray-700 mb-1 text-center">Ganhos por Categoria</h3>
+                    <h3 class="text-xl font-medium text-gray-700 mb-3 text-center">Ganhos por Categoria</h3>
                     <div id="incomeChartContainer" class="chart-container">
                         <!-- Percentage list will be dynamically created here -->
                     </div>
-                    <p id="noIncomeDataModal" class="text-center text-gray-500 mt-0.5 hidden text-sm">Não há dados de ganhos para exibir.</p>
+                    <p id="noIncomeDataModal" class="text-center text-gray-500 mt-2 text-base hidden">Não há dados de ganhos para exibir.</p>
                 </div>
             </div>
         </div>
@@ -622,7 +625,8 @@
         const loggedInView = document.getElementById('loggedInView');
         const loggedOutView = document.getElementById('loggedOutView');
         const userEmailSpan = document.getElementById('userEmail');
-        const logoutButton = document.getElementById('logoutButton');
+        const logoutButtonTopRight = document.getElementById('logoutButtonTopRight'); // Referencia o botão fixo
+
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
         const mainAppContent = document.getElementById('mainAppContent');
@@ -970,11 +974,15 @@
         function renderTransactions() {
             transactionsTableBody.innerHTML = ''; // Clear existing rows
 
-            // Sort transactions by date (most recent first)
-            const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+            // Sort transactions by createdAt (most recent first) or by date if createdAt is missing
+            const sortedTransactions = [...transactions].sort((a, b) => {
+                const dateA = a.createdAt ? a.createdAt.toDate() : new Date(a.date);
+                const dateB = b.createdAt ? b.createdAt.toDate() : new Date(b.date);
+                return dateB - dateA;
+            });
 
             // Display only the last 2 transactions
-            const transactionsToShow = sortedTransactions.slice(0, 2); // Changed slice to 2
+            const transactionsToShow = sortedTransactions.slice(0, 2);
 
             if (transactionsToShow.length === 0) {
                 noTransactionsMessage.classList.remove('hidden');
@@ -997,12 +1005,12 @@
                 const categoryCell = row.insertCell();
                 const categorySpan = document.createElement('span');
                 categorySpan.className = 'category-text-colored';
-                categorySpan.style.color = getCategoryColor(t.category); // Apply category color to text
+                categorySpan.style.color = getCategoryColor(t.category);
                 categorySpan.textContent = t.category;
                 categoryCell.appendChild(categorySpan);
 
                 const descriptionCell = row.insertCell();
-                descriptionCell.textContent = String(t.description || ''); // Ensure description is always a string
+                descriptionCell.textContent = String(t.description || '');
 
                 const dateCell = row.insertCell();
                 dateCell.textContent = new Date(t.date).toLocaleDateString('pt-BR');
@@ -1073,8 +1081,12 @@
                 filteredTransactions = filteredTransactions.filter(t => new Date(t.date) <= new Date(filterEndDate));
             }
 
-            // Sort filtered transactions by date (most recent first)
-            const sortedFilteredTransactions = filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            // Sort filtered transactions by createdAt (most recent first) or by date if createdAt is missing
+            const sortedFilteredTransactions = filteredTransactions.sort((a, b) => {
+                const dateA = a.createdAt ? a.createdAt.toDate() : new Date(a.date);
+                const dateB = b.createdAt ? b.createdAt.toDate() : new Date(b.date);
+                return dateB - dateA;
+            });
 
             if (sortedFilteredTransactions.length === 0) {
                 noFilteredTransactionsMessage.classList.remove('hidden');
@@ -1097,12 +1109,12 @@
                 const categoryCell = row.insertCell();
                 const categorySpan = document.createElement('span');
                 categorySpan.className = 'category-text-colored';
-                categorySpan.style.color = getCategoryColor(t.category); // Apply category color to text
+                categorySpan.style.color = getCategoryColor(t.category);
                 categorySpan.textContent = t.category;
                 categoryCell.appendChild(categorySpan);
 
                 const descriptionCell = row.insertCell();
-                descriptionCell.textContent = String(t.description || ''); // Ensure description is always a string
+                descriptionCell.textContent = String(t.description || '');
 
                 const dateCell = row.insertCell();
                 dateCell.textContent = new Date(t.date).toLocaleDateString('pt-BR');
@@ -1114,10 +1126,9 @@
                 editButton.innerHTML = '<i class="fas fa-edit"></i>';
                 editButton.classList.add('btn', 'bg-blue-500', 'hover:bg-blue-600', 'text-white', 'px-3', 'py-1', 'rounded-full', 'text-sm');
                 editButton.title = 'Editar Transação';
-                // When editing from "All Transactions" modal, ensure it closes after edit
                 editButton.addEventListener('click', () => {
-                    hideAllTransactionsModal(); // Close this modal
-                    editTransaction(t.docId); // Open edit modal
+                    hideAllTransactionsModal();
+                    editTransaction(t.docId);
                 });
                 actionsCell.appendChild(editButton);
 
@@ -1130,15 +1141,10 @@
             });
         }
 
-        // Helper to hide all transactions modal
         function hideAllTransactionsModal() {
             allTransactionsModal.classList.add('hidden');
         }
 
-
-        /**
-         * Calculates and updates the financial summary (total income, expenses, balance).
-         */
         function updateSummary() {
             const totalIncome = transactions
                 .filter(t => t.type === 'income')
@@ -1166,11 +1172,6 @@
             }
         }
 
-        /**
-         * Prepares data for charts (percentages by category).
-         * @param {string} type - 'income' or 'expense'.
-         * @returns {object} - Labels, data, and percentages for display.
-         */
         function getChartData(type) {
             const filteredTransactions = transactions.filter(t => t.type === type);
             const categorySums = filteredTransactions.reduce((acc, t) => {
@@ -1187,15 +1188,12 @@
             return { labels, data, percentages };
         }
 
-        /**
-         * Populates the percentage list for expenses in the modal.
-         */
         function updateExpenseChartModal() {
-            expenseChartContainer.innerHTML = ''; // Clear container for text
+            expenseChartContainer.innerHTML = '';
 
             const { labels, data, percentages } = getChartData('expense');
 
-            console.log("Expense Report Data:", { labels, data, percentages }); // Debugging line
+            console.log("Expense Report Data:", { labels, data, percentages });
 
             if (data.length === 0) {
                 noExpenseDataModalMessage.classList.remove('hidden');
@@ -1209,10 +1207,10 @@
 
             labels.forEach((label, i) => {
                 const p = document.createElement('p');
-                p.className = 'flex items-center'; // Make paragraph a flex container
+                p.className = 'flex items-center';
                 const colorSwatch = document.createElement('span');
                 colorSwatch.className = 'color-swatch';
-                colorSwatch.style.backgroundColor = getCategoryColor(label); // Use getCategoryColor
+                colorSwatch.style.backgroundColor = getCategoryColor(label);
                 p.appendChild(colorSwatch);
                 p.appendChild(document.createTextNode(`${label}: R$ ${data[i].toFixed(2)} (${percentages[i]}%)`));
                 listDiv.appendChild(p);
@@ -1220,15 +1218,12 @@
             expenseChartContainer.appendChild(listDiv);
         }
 
-        /**
-         * Populates the percentage list for income in the modal.
-         */
         function updateIncomeChartModal() {
-            incomeChartContainer.innerHTML = ''; // Clear container for text
+            incomeChartContainer.innerHTML = '';
 
             const { labels, data, percentages } = getChartData('income');
 
-            console.log("Income Report Data:", { labels, data, percentages }); // Debugging line
+            console.log("Income Report Data:", { labels, data, percentages });
 
             if (data.length === 0) {
                 noIncomeDataModalMessage.classList.remove('hidden');
@@ -1242,10 +1237,10 @@
 
             labels.forEach((label, i) => {
                 const p = document.createElement('p');
-                p.className = 'flex items-center'; // Make paragraph a flex container
+                p.className = 'flex items-center';
                 const colorSwatch = document.createElement('span');
                 colorSwatch.className = 'color-swatch';
-                colorSwatch.style.backgroundColor = getCategoryColor(label); // Use getCategoryColor
+                colorSwatch.style.backgroundColor = getCategoryColor(label);
                 p.appendChild(colorSwatch);
                 p.appendChild(document.createTextNode(`${label}: R$ ${data[i].toFixed(2)} (${percentages[i]}%)`));
                 listDiv.appendChild(p);
@@ -1253,34 +1248,22 @@
             incomeChartContainer.appendChild(listDiv);
         }
 
-
-        /**
-         * Opens the Percentage Reports modal.
-         */
         function openPercentageReportsModal() {
             percentageReportsModal.classList.remove('hidden');
-            updateExpenseChartModal(); // Render percentage list
-            updateIncomeChartModal();  // Render percentage list
+            updateExpenseChartModal();
+            updateIncomeChartModal();
         }
 
-        /**
-         * Closes the Percentage Reports modal.
-         */
         function closePercentageReportsModal() {
             percentageReportsModal.classList.add('hidden');
         }
 
-
-        /**
-         * Updates all UI components based on the current data.
-         */
         function updateUI() {
-            populateCategoryDropdowns(); // Ensure categories are always up-to-date
-            renderTransactions(); // Only latest 2
+            populateCategoryDropdowns();
+            renderTransactions();
             updateSummary();
         }
 
-        // Event Listeners for Forms
         incomeForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const amount = document.getElementById('incomeAmount').value;
@@ -1291,7 +1274,7 @@
             if (amount && category && date) {
                 await addTransaction('income', amount, category, description, date);
                 incomeForm.reset();
-                document.getElementById('incomeDate').value = new Date().toISOString().split('T')[0]; // Reset date to today
+                document.getElementById('incomeDate').value = new Date().toISOString().split('T')[0];
             } else {
                 showModal('Por favor, preencha os campos obrigatórios do ganho: Valor, Categoria e Data.');
             }
@@ -1307,34 +1290,32 @@
             if (amount && category && date) {
                 await addTransaction('expense', amount, category, description, date);
                 expenseForm.reset();
-                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0]; // Reset date to today
+                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
             } else {
                 showModal('Por favor, preencha os campos obrigatórios da despesa: Valor, Categoria e Data.');
             }
         });
 
-        // Event Listeners for Add Category Buttons (open modal)
         addIncomeCategoryBtn.addEventListener('click', () => {
             currentCategoryTypeToAdd = 'income';
             addCategoryModalType.textContent = 'para Ganhos';
-            newCategoryInput.value = ''; // Clear previous input
+            newCategoryInput.value = '';
             addCategoryModal.classList.remove('hidden');
-            renderCustomCategoriesList(); // Update list when opening modal
+            renderCustomCategoriesList();
         });
 
         addExpenseCategoryBtn.addEventListener('click', () => {
             currentCategoryTypeToAdd = 'expense';
             addCategoryModalType.textContent = 'para Despesas';
-            newCategoryInput.value = ''; // Clear previous input
+            newCategoryInput.value = '';
             addCategoryModal.classList.remove('hidden');
-            renderCustomCategoriesList(); // Update list when opening modal
+            renderCustomCategoriesList();
         });
 
         closeAddCategoryModalButton.addEventListener('click', () => {
             addCategoryModal.classList.add('hidden');
         });
 
-        // Event Listener for Save New Category Button inside modal
         saveNewCategoryButton.addEventListener('click', async () => {
             const newCategory = newCategoryInput.value.trim();
             if (!userId) {
@@ -1363,14 +1344,12 @@
                 }
 
                 if (allCurrentCategories.includes(newCategory.toLowerCase())) {
-                    showModal(errorMessage); // Category already exists
+                    showModal(errorMessage);
                 } else {
                     try {
                         await addDoc(categoriesRef, { name: newCategory });
-                        newCategoryInput.value = ''; // Clear input
-                        // addCategoryModal.classList.add('hidden'); // Keep modal open to manage categories
+                        newCategoryInput.value = '';
                         showModal(successMessage);
-                        // populateCategoryDropdowns and renderCustomCategoriesList will be called by onSnapshot listener
                     } catch (e) {
                         console.error(`Erro ao adicionar categoria ${currentCategoryTypeToAdd}: `, e);
                         showModal(`Erro ao adicionar categoria. Tente novamente. (Detalhe: ${e.message})`);
@@ -1380,7 +1359,6 @@
                 showModal('Por favor, digite um nome para a nova categoria.');
             }
         });
-
 
         cancelEditButton.addEventListener('click', hideEditModal);
 
@@ -1406,13 +1384,10 @@
         viewChartsButton.addEventListener('click', openPercentageReportsModal);
         closePercentageReportsModalButton.addEventListener('click', closePercentageReportsModal);
 
-
-        // Filter event listeners for "All Transactions" modal
         filterTypeSelect.addEventListener('change', applyFiltersAndRenderAllTransactions);
         filterCategorySelect.addEventListener('change', applyFiltersAndRenderAllTransactions);
         filterStartDateInput.addEventListener('change', applyFiltersAndRenderAllTransactions);
         filterEndDateInput.addEventListener('change', applyFiltersAndRenderAllTransactions);
-
 
         // Authentication Event Listeners
         loginForm.addEventListener('submit', async (e) => {
@@ -1459,7 +1434,7 @@
             }
         });
 
-        logoutButton.addEventListener('click', async () => {
+        logoutButtonTopRight.addEventListener('click', async () => {
             try {
                 await signOut(auth);
                 showModal("Você foi desconectado.");
@@ -1475,35 +1450,28 @@
                 if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
                     console.error("Firebase config not found or invalid. Please ensure firebaseConfig object is correctly defined.");
                     showModal("Configuração do Firebase não encontrada. Verifique as credenciais no código.");
-                    return; // Exit if config is bad
+                    return;
                 }
 
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
 
-                // IMPORTANT: Ensure auth is initialized before adding listener
                 if (!auth) {
                     console.error("Firebase Auth object failed to initialize.");
                     showModal("Erro de inicialização: Não foi possível configurar a autenticação. Recarregue a página.");
-                    return; // Exit if auth failed
+                    return;
                 }
 
-                // This part handles the initial authentication for the Canvas environment
-                // For local execution, it will try custom token sign-in if available, otherwise no automatic sign-in.
                 if (initialAuthToken) {
                     try {
                         await signInWithCustomToken(auth, initialAuthToken);
                         console.log("Signed in with custom token.");
                     } catch (error) {
                         console.error("Error signing in with custom token:", error);
-                        // showModal("Erro ao fazer login automático. Por favor, faça login manualmente."); // Removed this modal to prevent double modals
                     }
                 }
-                // If initialAuthToken is null (e.g., local execution), no automatic sign-in is attempted here.
-                // The user will see the login/register forms by default.
 
-                // Firebase Auth State Listener (THIS MUST BE CALLED AFTER 'auth' IS DEFINED)
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         userId = user.uid;
@@ -1511,20 +1479,19 @@
                         loggedInView.classList.remove('hidden');
                         loggedOutView.classList.add('hidden');
                         mainAppContent.classList.remove('hidden');
-                        authSection.classList.add('hidden'); // Hide auth section after login
+                        authSection.classList.add('hidden');
+                        logoutButtonTopRight.classList.remove('hidden');
 
-                        // Start listening for real-time transactions
                         const q = query(collection(db, `artifacts/${appId}/users/${userId}/transactions`));
                         onSnapshot(q, (snapshot) => {
                             transactions = snapshot.docs.map(doc => ({ docId: doc.id, ...doc.data() }));
                             updateUI();
-                            applyFiltersAndRenderAllTransactions(); // Also update the modal table if open
+                            applyFiltersAndRenderAllTransactions();
                         }, (error) => {
                             console.error("Erro ao ouvir transações: ", error);
                             showModal("Erro ao carregar transações. Verifique sua conexão ou tente novamente.");
                         });
 
-                        // Listen for custom categories (income)
                         const incomeCategoriesQ = query(collection(db, `artifacts/${appId}/users/${userId}/customIncomeCategories`));
                         onSnapshot(incomeCategoriesQ, (snapshot) => {
                             customIncomeCategories = snapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
@@ -1533,7 +1500,6 @@
                             console.error("Erro ao ouvir categorias de ganho personalizadas: ", error);
                         });
 
-                        // Listen for custom categories (expense)
                         const expenseCategoriesQ = query(collection(db, `artifacts/${appId}/users/${userId}/customExpenseCategories`));
                         onSnapshot(expenseCategoriesQ, (snapshot) => {
                             customExpenseCategories = snapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
@@ -1548,12 +1514,13 @@
                         loggedInView.classList.add('hidden');
                         loggedOutView.classList.remove('hidden');
                         mainAppContent.classList.add('hidden');
-                        authSection.classList.remove('hidden'); // Show auth section
+                        authSection.classList.remove('hidden');
+                        logoutButtonTopRight.classList.add('hidden');
 
-                        transactions = []; // Clear transactions if logged out
-                        customIncomeCategories = []; // Clear custom categories
-                        customExpenseCategories = []; // Clear custom categories
-                        updateUI(); // Clear UI
+                        transactions = [];
+                        customIncomeCategories = [];
+                        customExpenseCategories = [];
+                        updateUI();
                     }
                 });
 
@@ -1562,7 +1529,6 @@
                 showModal("Erro grave na inicialização do aplicativo. Verifique as credenciais do Firebase.");
             }
 
-            // Set default date to today for convenience
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('incomeDate').value = today;
             document.getElementById('expenseDate').value = today;
