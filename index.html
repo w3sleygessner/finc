@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finc</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            height: 100vh; /* Use height instead of min-height to strictly control */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent body scroll */
+        }
+        .container {
+            max-width: 98%; /* Wider container for more space */
+            margin: 0.2rem auto; /* Slightly increased margin */
+            padding: 0.4rem; /* Slightly increased padding */
+            background-color: #ffffff;
+            border-radius: 12px; /* Increased border-radius */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Increased shadow */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: hidden; /* Prevent internal scrolling to force fit */
+        }
+        .input-group label {
+            font-weight: 500;
+            color: #4a5568;
+            font-size: 0.95rem; /* Increased font for labels */
+        }
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.45rem 0.7rem; /* Slightly increased padding */
+            border: 1px solid #cbd5e0;
+            border-radius: 8px; /* Increased border-radius */
+            font-size: 0.85rem; /* Increased font */
+            transition: all 0.2s ease-in-out;
+        }
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5); /* Increased shadow */
+        }
+        .btn {
+            padding: 0.6rem 1rem; /* Increased padding */
+            border-radius: 8px; /* Increased border-radius */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Increased shadow */
+            font-size: 0.95rem; /* Increased font */
+        }
+        .btn-primary {
+            background-color: #4299e1;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #3182ce;
+            transform: translateY(-1px);
+        }
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626;
+            transform: translateY(-1px);
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.4rem; /* Increased spacing */
+        }
+        th, td {
+            text-align: left;
+            padding: 0.4rem; /* Increased padding */
+            font-size: 0.9rem; /* Increased font for table content */
+        }
+        th {
+            background-color: #edf2f7;
+            color: #2d3748;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem; /* Increased font for table header */
+            border-radius: 8px; /* Increased border-radius */
+        }
+        td {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Increased shadow */
+            border-radius: 8px; /* Increased border-radius */
+        }
+        tr:first-child th:first-child { border-top-left-radius: 8px; }
+        tr:first-child th:last-child { border-top-right-radius: 8px; }
+        tr:last-child td:first-child { border-bottom-left-radius: 8px; }
+        tr:last-child td:last-child { border-bottom-right-radius: 8px; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 1.5rem; /* Increased padding */
+            border-radius: 12px; /* Increased border-radius */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow */
+            text-align: center;
+            max-width: 400px; /* Increased max width */
+            width: 90%;
+            position: relative;
+        }
+        .charts-modal-content, .all-transactions-modal-content {
+            background-color: white;
+            padding: 2rem; /* Increased padding */
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 95%;
+            width: 95%;
+            max-height: 95vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem; /* Adjusted positioning */
+            right: 1rem; /* Adjusted positioning */
+            background: none;
+            border: none;
+            font-size: 1.5rem; /* Increased icon size */
+            cursor: pointer;
+            color: #4a5568;
+        }
+        .modal-close-btn:hover {
+            color: #2d3748;
+        }
+
+        .chart-container { /* This will now be used for text display, not canvas */
+            position: relative;
+            height: auto; /* Height auto for text */
+            width: 100%;
+            margin: 0.5rem auto;
+            max-width: 300px;
+        }
+        .percentage-list p {
+            font-size: 0.95rem; /* Slightly larger font for percentages */
+            margin-bottom: 0.25rem;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Align text to start */
+        }
+        .color-swatch {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.25rem;
+            margin-right: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        .category-text-colored { /* New class for colored category text in tables */
+            display: inline-block;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .category-item { /* For category management list */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 0.95rem;
+        }
+        .category-item:last-child {
+            border-bottom: none;
+        }
+        .category-delete-btn {
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%; /* Make it round */
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .category-delete-btn:hover {
+            background-color: #dc2626;
+        }
+        @media (min-width: 768px) {
+            .grid-cols-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            /* New 2x2 grid for main content */
+            .grid-cols-2-md-dynamic {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, minmax(0, 1fr)); /* Explicitly define 2 equal rows */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 sm:p-6"> <!-- Increased overall body padding -->
+
+    <div id="app" class="container">
+        <!-- Seção de Autenticação -->
+        <div id="authSection" class="bg-white p-6 rounded-xl shadow-lg mb-6 border border-purple-200"> <!-- Increased padding and mb -->
+            <h2 class="text-2xl font-semibold text-purple-700 mb-4 text-center">Autenticação</h2> <!-- Increased font size and mb -->
+            <div id="loggedInView" class="hidden">
+                <p class="text-center text-gray-700 mb-4 text-base">Bem-vindo(a), <span id="userEmail" class="font-semibold"></span>!</p> <!-- Increased mb and font size -->
+                <button id="logoutButton" class="btn btn-primary bg-purple-500 hover:bg-purple-600 w-full text-base">Sair</button> <!-- Increased font size -->
+            </div>
+            <div id="loggedOutView">
+                <form id="loginForm" class="space-y-4 mb-6"> <!-- Increased space-y and mb -->
+                    <h3 class="text-xl font-medium text-gray-700">Fazer Login</h3> <!-- Increased font size -->
+                    <div class="input-group">
+                        <label for="loginEmail" class="block text-sm">E-mail:</label>
+                        <input type="email" id="loginEmail" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base"> <!-- Increased mt and font size -->
+                    </div>
+                    <div class="input-group">
+                        <label for="loginPassword" class="block text-sm">Senha:</label>
+                        <input type="password" id="loginPassword" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base"> <!-- Increased mt and font size -->
+                    </div>
+                    <button type="submit" class="btn btn-primary bg-green-500 hover:bg-green-600 w-full text-base">Entrar</button> <!-- Increased font size -->
+                </form>
+
+                <div class="text-center mb-6"> <!-- Increased mb -->
+                    <p class="text-gray-600 text-base">Ou</p> <!-- Increased font size -->
+                </div>
+
+                <form id="registerForm" class="space-y-4"> <!-- Increased space-y -->
+                    <h3 class="text-xl font-medium text-gray-700">Registrar-se</h3> <!-- Increased font size -->
+                    <div class="input-group">
+                        <label for="registerEmail" class="block text-sm">E-mail:</label>
+                        <input type="email" id="registerEmail" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base">
+                    </div>
+                    <div class="input-group">
+                        <label for="registerPassword" class="block text-sm">Senha:</label>
+                        <input type="password" id="registerPassword" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-base">
+                    </div>
+                    <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base">Registrar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal do Aplicativo (visível apenas para usuários logados) -->
+        <div id="mainAppContent" class="hidden flex-grow grid grid-cols-1 md:grid-cols-2 grid-rows-[repeat(2,minmax(0,1fr))] gap-4">
+            <!-- Bloco 1 (Ganhos) - Row 1, Col 1 -->
+            <div class="bg-white p-4 rounded-xl shadow-lg border border-green-200 flex flex-col justify-between">
+                <h2 class="text-xl font-semibold text-green-700 mb-3 flex items-center">
+                    <i class="fas fa-plus-circle mr-2"></i> Adicionar Ganho
+                </h2>
+                <form id="incomeForm" class="space-y-2 flex-grow flex flex-col justify-between">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="input-group">
+                            <label for="incomeAmount" class="block text-sm">Valor:</label>
+                            <input type="number" id="incomeAmount" step="0.01" required
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base">
+                        </div>
+                        <div class="input-group flex items-center">
+                            <label for="incomeCategory" class="block text-sm mr-2">Categoria:</label>
+                            <select id="incomeCategory" required
+                                    class="flex-grow rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base">
+                                <option value="">Selecione</option>
+                            </select>
+                            <button type="button" id="addIncomeCategoryBtn" class="ml-2 p-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center text-sm" style="width: 32px; height: 32px;" title="Adicionar Categoria de Ganho">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="input-group flex-[3]">
+                            <label for="incomeDescription" class="block text-sm">Descrição (opcional):</label>
+                            <textarea id="incomeDescription" rows="1"
+                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base"></textarea>
+                        </div>
+                        <div class="input-group flex-1">
+                            <label for="incomeDate" class="block text-sm">Data:</label>
+                            <input type="date" id="incomeDate" required
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary bg-green-500 hover:bg-green-600 w-full text-base mt-3">Adicionar Ganho</button>
+                </form>
+            </div>
+
+            <!-- Bloco 2 (Despesas) - Row 1, Col 2 -->
+            <div class="bg-white p-4 rounded-xl shadow-lg border border-red-200 flex flex-col justify-between">
+                <h2 class="text-xl font-semibold text-red-700 mb-3 flex items-center">
+                    <i class="fas fa-minus-circle mr-2"></i> Adicionar Despesa
+                </h2>
+                <form id="expenseForm" class="space-y-2 flex-grow flex flex-col justify-between">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="input-group">
+                            <label for="expenseAmount" class="block text-sm">Valor:</label>
+                            <input type="number" id="expenseAmount" step="0.01" required
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base">
+                        </div>
+                        <div class="input-group flex items-center">
+                            <label for="expenseCategory" class="block text-sm mr-2">Categoria:</label>
+                            <select id="expenseCategory" required
+                                    class="flex-grow rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base">
+                                <option value="">Selecione</option>
+                            </select>
+                            <button type="button" id="addExpenseCategoryBtn" class="ml-2 p-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center text-sm" style="width: 32px; height: 32px;" title="Adicionar Categoria de Despesa">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="input-group flex-[3]">
+                            <label for="expenseDescription" class="block text-sm">Descrição (opcional):</label>
+                            <textarea id="expenseDescription" rows="1"
+                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base"></textarea>
+                        </div>
+                        <div class="input-group flex-1">
+                            <label for="expenseDate" class="block text-sm">Data:</label>
+                            <input type="date" id="expenseDate" required
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary bg-red-500 hover:bg-red-600 w-full text-base mt-3">Adicionar Despesa</button>
+                </form>
+            </div>
+
+            <!-- Bloco 3 (Resumo Financeiro) - Row 2, Col 1 -->
+            <div class="bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3 flex items-center justify-center">
+                    <i class="fas fa-chart-pie mr-2"></i> Resumo Financeiro
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center flex-grow">
+                    <div class="bg-blue-50 p-2 rounded-lg shadow-sm flex flex-col justify-center">
+                        <p class="text-gray-600 text-sm">Total Ganhos:</p>
+                        <p id="totalIncome" class="text-xl font-bold text-green-600">R$ 0.00</p>
+                    </div>
+                    <div class="bg-blue-50 p-2 rounded-lg shadow-sm flex flex-col justify-center">
+                        <p class="text-gray-600 text-sm">Total Despesas:</p>
+                        <p id="totalExpenses" class="text-xl font-bold text-red-600">R$ 0.00</p>
+                    </div>
+                    <div class="bg-blue-50 p-2 rounded-lg shadow-sm flex flex-col justify-center">
+                        <p class="text-gray-600 text-sm">Saldo Atual:</p>
+                        <p id="currentBalance" class="text-xl font-bold text-blue-600">R$ 0.00</p>
+                    </div>
+                </div>
+                <button id="viewChartsButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base mt-3">Ver Relatórios em Porcentagem</button>
+            </div>
+
+            <!-- Bloco 4 (Últimas Transações) - Row 2, Col 2 -->
+            <div class="bg-white p-4 rounded-xl shadow-lg flex flex-col flex-grow">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3 flex items-center justify-center">
+                    <i class="fas fa-list-alt mr-2"></i> Últimas Transações
+                </h2>
+                <div class="overflow-y-auto text-base flex-grow"> <!-- Changed to overflow-y-auto for internal scroll -->
+                    <table id="transactionsTable" class="min-w-full">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Categoria</th>
+                                <th>Descrição</th>
+                                <th>Data</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Latest 2 transactions will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                    <p id="noTransactionsMessage" class="text-center text-gray-500 mt-2 hidden text-base">Nenhuma transação registrada ainda.</p>
+                </div>
+                <button id="viewAllTransactionsButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base mt-2">Ver Todas as Transações</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Messages -->
+    <div id="customModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <p id="modalMessage" class="text-lg text-gray-700 mb-6"></p>
+            <button id="modalCloseButton" class="btn btn-primary px-6 py-2">OK</button>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="addCategoryModal" class="modal-overlay hidden">
+        <div class="modal-content text-left"> <!-- Changed to text-left for list -->
+            <button class="modal-close-btn" id="closeAddCategoryModalButton"><i class="fas fa-times"></i></button>
+            <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Adicionar Categoria</h2>
+            <p id="addCategoryModalType" class="text-center text-gray-600 mb-3 text-sm"></p>
+            <div class="input-group mb-4">
+                <label for="newCategoryInput" class="block text-sm">Nome da Categoria:</label>
+                <input type="text" id="newCategoryInput" placeholder="Nome da nova categoria"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 p-2 text-base">
+            </div>
+            <button id="saveNewCategoryButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base">Salvar Categoria</button>
+
+            <hr class="my-6 border-t border-gray-200"> <!-- Separator -->
+
+            <h3 class="text-lg font-semibold text-gray-800 mb-3 text-center">Gerenciar Categorias Personalizadas</h3>
+            <div id="customCategoriesList" class="space-y-2 max-h-40 overflow-y-auto"> <!-- Scrollable list -->
+                <!-- Custom categories will be listed here dynamically -->
+                <p id="noCustomCategoriesMessage" class="text-center text-gray-500 text-sm hidden">Nenhuma categoria personalizada adicionada ainda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Transaction Modal -->
+    <div id="editModal" class="modal-overlay hidden">
+        <div class="modal-content text-left">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Editar Transação</h2>
+            <form id="editForm" class="space-y-4">
+                <input type="hidden" id="editTransactionId">
+                <div class="input-group">
+                    <label for="editType" class="block text-sm">Tipo:</label>
+                    <select id="editType" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base">
+                        <option value="income">Ganho</option>
+                        <option value="expense">Despesa</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="editAmount" class="block text-sm">Valor:</label>
+                    <input type="number" id="editAmount" step="0.01" required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base">
+                </div>
+                <div class="input-group">
+                    <label for="editCategory" class="block text-sm">Categoria:</label>
+                    <select id="editCategory" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="editDescription" class="block text-sm">Descrição (opcional):</label>
+                    <textarea id="editDescription" rows="1"
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="editDate" class="block text-sm">Data:</label>
+                    <input type="date" id="editDate" required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-base">
+                </div>
+                <div class="flex justify-end gap-4 mt-6">
+                    <button type="button" id="cancelEditButton" class="btn bg-gray-300 hover:bg-gray-400 text-gray-800 text-base">Cancelar</button>
+                    <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-600 text-base">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- All Transactions Modal -->
+    <div id="allTransactionsModal" class="modal-overlay hidden">
+        <div class="all-transactions-modal-content">
+            <button class="modal-close-btn" id="closeAllTransactionsModalButton"><i class="fas fa-times"></i></button>
+            <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Todas as Transações</h2>
+
+            <!-- Filters -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
+                <div class="input-group">
+                    <label for="filterType" class="block text-sm">Tipo:</label>
+                    <select id="filterType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+                        <option value="">Todos</option>
+                        <option value="income">Ganho</option>
+                        <option value="expense">Despesa</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="filterCategory" class="block text-sm">Categoria:</label>
+                    <select id="filterCategory" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+                        <option value="">Todas</option>
+                        <!-- Categories populated dynamically -->
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="filterStartDate" class="block text-sm">Data Início:</label>
+                    <input type="date" id="filterStartDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+                </div>
+                <div class="input-group">
+                    <label for="filterEndDate" class="block text-sm">Data Fim:</label>
+                    <input type="date" id="filterEndDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table id="allTransactionsTable" class="min-w-full">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Categoria</th>
+                            <th>Descrição</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- All transactions will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+                <p id="noFilteredTransactionsMessage" class="text-center text-gray-500 mt-2 hidden text-sm">Nenhuma transação encontrada com os filtros aplicados.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Percentage Reports Modal -->
+    <div id="percentageReportsModal" class="modal-overlay hidden">
+        <div class="charts-modal-content">
+            <button class="modal-close-btn" id="closePercentageReportsModalButton"><i class="fas fa-times"></i></button>
+            <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Relatórios em Porcentagem</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="text-base font-medium text-gray-700 mb-1 text-center">Despesas por Categoria</h3>
+                    <div id="expenseChartContainer" class="chart-container">
+                        <!-- Percentage list will be dynamically created here -->
+                    </div>
+                    <p id="noExpenseDataModal" class="text-center text-gray-500 mt-0.5 hidden text-sm">Não há dados de despesas para exibir.</p>
+                </div>
+                <div>
+                    <h3 class="text-base font-medium text-gray-700 mb-1 text-center">Ganhos por Categoria</h3>
+                    <div id="incomeChartContainer" class="chart-container">
+                        <!-- Percentage list will be dynamically created here -->
+                    </div>
+                    <p id="noIncomeDataModal" class="text-center text-gray-500 mt-0.5 hidden text-sm">Não há dados de ganhos para exibir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module">
+        // Importar módulos do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // CONFIGURAÇÃO DO FIREBASE (PARA USO LOCAL FORA DO AMBIENTE CANVAS)
+        // SUBSTITUA ESTES VALORES COM AS CREDENCIAIS DO SEU PRÓPRIO PROJETO FIREBASE
+        const firebaseConfig = {
+          apiKey: "AIzaSyBve8LlWDvsGaELo5RxMgAZNe0fInRYxv0",
+          authDomain: "meu-gerenciador-financeiro.firebaseapp.com",
+          projectId: "meu-gerenciador-financeiro",
+          storageBucket: "meu-gerenciador-financeiro.firebasestorage.app",
+          messagingSenderId: "307510787106",
+          appId: "1:307510787106:web:397b1216eca6d22a01de7b",
+          measurementId: "G-H7KJFQ6FWW"
+        };
+        const appId = firebaseConfig.appId; // Usa o appId da sua configuração Firebase
+        const initialAuthToken = null; // Definido como null para uso local com email/senha
+
+
+        // Inicializar Firebase
+        let app;
+        let db;
+        let auth;
+        let userId = null;
+        let transactions = []; // Main array for all transactions fetched from Firestore
+        let customIncomeCategories = []; // User-defined income categories
+        let customExpenseCategories = []; // User-defined expense categories
+
+        // Predefined categories (These will be supplemented by user's custom categories from Firestore)
+        const predefinedIncomeCategories = ['Salário', 'Investimento', 'Venda', 'Freelance'];
+        const predefinedExpenseCategories = ['Alimentação', 'Moradia', 'Transporte', 'Lazer', 'Saúde', 'Educação', 'Contas', 'Outros'];
+
+        // Definir um mapeamento de cores para categorias
+        const categoryColors = {
+            'Salário': '#4CAF50', // Verde
+            'Investimento': '#2196F3', // Azul
+            'Venda': '#FFC107', // Amarelo
+            'Freelance': '#9C27B0', // Roxo
+            'Outros Ganhos': '#795548', // Marrom
+
+            'Alimentação': '#FF5722', // Laranja Escuro
+            'Moradia': '#F44336', // Vermelho
+            'Transporte': '#607D8B', // Azul Acinzentado
+            'Lazer': '#E91E63', // Rosa
+            'Saúde': '#00BCD4', // Ciano
+            'Educação': '#3F51B5', // Azul Índigo
+            'Contas': '#FF9800', // Laranja
+            'Outras Despesas': '#673AB7', // Roxo Escuro
+            // Cores padrão para categorias não listadas (serão geradas dinamicamente)
+        };
+
+        // Função para obter uma cor para a categoria, usando as definidas ou gerando uma
+        function getCategoryColor(category) {
+            if (categoryColors[category]) {
+                return categoryColors[category];
+            }
+            // Gerar cor aleatória para novas categorias - garante consistência para a mesma categoria
+            let hash = 0;
+            for (let i = 0; i < category.length; i++) {
+                hash = category.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const hue = hash % 360;
+            return `hsl(${hue}, 70%, 60%)`;
+        }
+
+        // Get DOM elements
+        const authSection = document.getElementById('authSection');
+        const loggedInView = document.getElementById('loggedInView');
+        const loggedOutView = document.getElementById('loggedOutView');
+        const userEmailSpan = document.getElementById('userEmail');
+        const logoutButton = document.getElementById('logoutButton');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const mainAppContent = document.getElementById('mainAppContent');
+
+        const incomeForm = document.getElementById('incomeForm');
+        const expenseForm = document.getElementById('expenseForm');
+        const incomeCategorySelect = document.getElementById('incomeCategory');
+        const expenseCategorySelect = document.getElementById('expenseCategory');
+        const incomeDescriptionInput = document.getElementById('incomeDescription');
+        const expenseDescriptionInput = document.getElementById('expenseDescription');
+        const transactionsTableBody = document.querySelector('#transactionsTable tbody');
+        const totalIncomeSpan = document.getElementById('totalIncome');
+        const totalExpensesSpan = document.getElementById('totalExpenses');
+        const currentBalanceSpan = document.getElementById('currentBalance');
+        const noTransactionsMessage = document.getElementById('noTransactionsMessage');
+        const noExpenseDataMessage = document.getElementById('noExpenseData');
+        const noIncomeDataMessage = document.getElementById('noIncomeData');
+
+        // Chart containers in modal for dynamic content (now for text)
+        const expenseChartContainer = document.getElementById('expenseChartContainer');
+        const incomeChartContainer = document.getElementById('incomeChartContainer');
+
+        const noExpenseDataModalMessage = document.getElementById('noExpenseDataModal');
+        const noIncomeDataModalMessage = document.getElementById('noIncomeDataModal');
+
+        // Custom category elements (specific for income/expense)
+        const addIncomeCategoryBtn = document.getElementById('addIncomeCategoryBtn');
+        const addExpenseCategoryBtn = document.getElementById('addExpenseCategoryBtn');
+        const customCategoriesList = document.getElementById('customCategoriesList'); // Element to list custom categories for deletion
+        const noCustomCategoriesMessage = document.getElementById('noCustomCategoriesMessage');
+
+
+        // Modals
+        const customModal = document.getElementById('customModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalCloseButton = document.getElementById('modalCloseButton');
+
+        const addCategoryModal = document.getElementById('addCategoryModal');
+        const closeAddCategoryModalButton = document.getElementById('closeAddCategoryModalButton');
+        const addCategoryModalType = document.getElementById('addCategoryModalType');
+        const newCategoryInput = document.getElementById('newCategoryInput');
+        const saveNewCategoryButton = document.getElementById('saveNewCategoryButton');
+        let currentCategoryTypeToAdd = '';
+
+        const editModal = document.getElementById('editModal');
+        const editForm = document.getElementById('editForm');
+        const editTransactionIdInput = document.getElementById('editTransactionId');
+        const editTypeSelect = document.getElementById('editType');
+        const editAmountInput = document.getElementById('editAmount');
+        const editCategorySelect = document.getElementById('editCategory');
+        const editDescriptionInput = document.getElementById('editDescription');
+        const editDateInput = document.getElementById('editDate');
+        const cancelEditButton = document.getElementById('cancelEditButton');
+
+        const allTransactionsModal = document.getElementById('allTransactionsModal');
+        const viewAllTransactionsButton = document.getElementById('viewAllTransactionsButton');
+        const closeAllTransactionsModalButton = document.getElementById('closeAllTransactionsModalButton');
+        const allTransactionsTableBody = document.querySelector('#allTransactionsTable tbody');
+        const noFilteredTransactionsMessage = document.getElementById('noFilteredTransactionsMessage');
+
+        const percentageReportsModal = document.getElementById('percentageReportsModal');
+        const viewChartsButton = document.getElementById('viewChartsButton');
+        const closePercentageReportsModalButton = document.getElementById('closePercentageReportsModalButton');
+
+
+        // Filter elements for all transactions modal
+        const filterTypeSelect = document.getElementById('filterType');
+        const filterCategorySelect = document.getElementById('filterCategory');
+        const filterStartDateInput = document.getElementById('filterStartDate');
+        const filterEndDateInput = document.getElementById('filterEndDate');
+
+
+        /**
+         * Shows a custom modal message to the user.
+         * @param {string} message - The message to display.
+         */
+        function showModal(message) {
+            modalMessage.textContent = message;
+            customModal.classList.remove('hidden');
+        }
+
+        /**
+         * Hides the custom modal.
+         */
+        function hideModal() {
+            customModal.classList.add('hidden');
+        }
+
+        modalCloseButton.addEventListener('click', hideModal);
+
+        /**
+         * Loads custom categories from Firestore.
+         */
+        async function loadCustomCategories() {
+            if (!userId) {
+                customIncomeCategories = [];
+                customExpenseCategories = [];
+                return;
+            }
+            try {
+                if (!db) {
+                    console.error("Firestore is not initialized.");
+                    return;
+                }
+
+                const incomeCategoriesRef = collection(db, `artifacts/${appId}/users/${userId}/customIncomeCategories`);
+                const expenseCategoriesRef = collection(db, `artifacts/${appId}/users/${userId}/customExpenseCategories`);
+
+                const incomeSnapshot = await getDocs(incomeCategoriesRef);
+                customIncomeCategories = incomeSnapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
+                //console.log("Loaded Income Categories:", customIncomeCategories);
+
+                const expenseSnapshot = await getDocs(expenseCategoriesRef);
+                customExpenseCategories = expenseSnapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
+                //console.log("Loaded Expense Categories:", customExpenseCategories);
+
+            } catch (error) {
+                console.error("Error loading custom categories:", error);
+                // No need to show modal here, populateCategoryDropdowns will handle empty lists
+            }
+        }
+
+        /**
+         * Populates the category dropdowns with predefined and custom categories.
+         */
+        async function populateCategoryDropdowns() {
+            await loadCustomCategories(); // Ensure latest custom categories are loaded first
+
+            // Helper to populate a single select element
+            const populateSelect = (selectElement, predefinedList, customList) => {
+                selectElement.innerHTML = '<option value="">Selecione a categoria</option>';
+                const allOptions = [...new Set([...predefinedList, ...customList.map(c => c.name)])].sort();
+                allOptions.forEach(categoryName => {
+                    const option = document.createElement('option');
+                    option.value = categoryName;
+                    option.textContent = categoryName;
+                    selectElement.appendChild(option);
+                });
+            };
+
+            populateSelect(incomeCategorySelect, predefinedIncomeCategories, customIncomeCategories);
+            populateSelect(expenseCategorySelect, predefinedExpenseCategories, customExpenseCategories);
+
+            // Populate edit and filter dropdowns with ALL unique categories
+            editCategorySelect.innerHTML = '<option value="">Selecione a categoria</option>';
+            filterCategorySelect.innerHTML = '<option value="">Todas</option>';
+            const allUniqueCategories = [...new Set([
+                ...predefinedIncomeCategories,
+                ...predefinedExpenseCategories,
+                ...customIncomeCategories.map(c => c.name),
+                ...customExpenseCategories.map(c => c.name)
+            ])].sort();
+            allUniqueCategories.forEach(categoryName => {
+                const editOption = document.createElement('option');
+                editOption.value = categoryName;
+                editOption.textContent = categoryName;
+                editCategorySelect.appendChild(editOption);
+
+                const filterOption = document.createElement('option');
+                filterOption.value = categoryName;
+                filterOption.textContent = categoryName;
+                filterCategorySelect.appendChild(filterOption);
+            });
+
+            // Update category management list in modal
+            renderCustomCategoriesList();
+        }
+
+        /**
+         * Renders the list of custom categories in the addCategoryModal.
+         */
+        function renderCustomCategoriesList() {
+            customCategoriesList.innerHTML = '';
+            const allCustom = [...customIncomeCategories, ...customExpenseCategories];
+
+            if (allCustom.length === 0) {
+                noCustomCategoriesMessage.classList.remove('hidden');
+            } else {
+                noCustomCategoriesMessage.classList.add('hidden');
+                allCustom.forEach(cat => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'category-item';
+                    const categorySpan = document.createElement('span');
+                    categorySpan.textContent = cat.name;
+                    itemDiv.appendChild(categorySpan);
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'category-delete-btn';
+                    deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    deleteBtn.title = `Excluir ${cat.name}`;
+                    deleteBtn.addEventListener('click', () => deleteCustomCategory(cat.id, cat.name));
+                    itemDiv.appendChild(deleteBtn);
+                    customCategoriesList.appendChild(itemDiv);
+                });
+            }
+        }
+
+        /**
+         * Deletes a custom category from Firestore.
+         * @param {string} categoryId - The document ID of the category in Firestore.
+         * @param {string} categoryName - The name of the category.
+         */
+        async function deleteCustomCategory(categoryId, categoryName) {
+            if (!userId) {
+                showModal("Por favor, faça login para excluir categorias.");
+                return;
+            }
+            try {
+                // Determine which collection the category belongs to
+                let collectionPath;
+                if (customIncomeCategories.some(c => c.id === categoryId)) {
+                    collectionPath = `artifacts/${appId}/users/${userId}/customIncomeCategories`;
+                } else if (customExpenseCategories.some(c => c.id === categoryId)) {
+                    collectionPath = `artifacts/${appId}/users/${userId}/customExpenseCategories`;
+                } else {
+                    showModal("Erro: Categoria não encontrada para exclusão.");
+                    return;
+                }
+
+                await deleteDoc(doc(db, collectionPath, categoryId));
+                showModal(`Categoria "${categoryName}" excluída com sucesso!`);
+                // onSnapshot will trigger populateCategoryDropdowns and renderCustomCategoriesList
+            } catch (e) {
+                console.error("Erro ao excluir categoria:", e);
+                showModal(`Erro ao excluir categoria "${categoryName}". Tente novamente. (Detalhe: ${e.message})`);
+            }
+        }
+
+
+        /**
+         * Adds a new transaction to Firestore.
+         * @param {string} type - 'income' or 'expense'.
+         * @param {number} amount - The transaction amount.
+         * @param {string} category - The transaction category.
+         * @param {string} description - The transaction description.
+         * @param {string} date - The transaction date (YYYY-MM-DD).
+         */
+        async function addTransaction(type, amount, category, description, date) {
+            if (!userId) {
+                showModal("Por favor, faça login para adicionar transações.");
+                return;
+            }
+            try {
+                const transactionsRef = collection(db, `artifacts/${appId}/users/${userId}/transactions`);
+                await addDoc(transactionsRef, {
+                    type,
+                    amount: parseFloat(amount),
+                    category,
+                    description: String(description || ''), // Ensure description is saved as string
+                    date,
+                    createdAt: new Date() // Timestamp for sorting/tracking
+                });
+                // Data will be updated via onSnapshot listener, which triggers updateUI
+                // showModal(`${type === 'income' ? 'Ganho' : 'Despesa'} de R$ ${parseFloat(amount).toFixed(2)} adicionado com sucesso!`); // Removed as requested
+            }
+            catch (e) {
+                console.error("Erro ao adicionar transação: ", e);
+                showModal("Erro ao adicionar transação. Verifique sua conexão ou tente novamente.");
+            }
+        }
+
+        /**
+         * Deletes a transaction from Firestore by its ID.
+         * @param {string} docId - The Firestore document ID of the transaction to delete.
+         */
+        async function deleteTransaction(docId) {
+            if (!userId) {
+                showModal("Por favor, faça login para excluir transações.");
+                return;
+            }
+            try {
+                await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/transactions`, docId));
+                // No showModal as requested. Data will update via onSnapshot listener.
+            } catch (e) {
+                console.error("Erro ao excluir transação: ", e);
+                showModal("Erro ao excluir transação. Tente novamente.");
+            }
+        }
+
+        /**
+         * Displays the edit modal and populates it with transaction data.
+         * @param {string} docId - The Firestore document ID of the transaction to edit.
+         */
+        function editTransaction(docId) {
+            const transactionToEdit = transactions.find(t => t.docId === docId);
+            if (transactionToEdit) {
+                editTransactionIdInput.value = transactionToEdit.docId;
+                editTypeSelect.value = transactionToEdit.type;
+                editAmountInput.value = transactionToEdit.amount;
+
+                populateCategoryDropdowns(); // Ensure all categories are available
+                editCategorySelect.value = transactionToEdit.category;
+
+                editDescriptionInput.value = String(transactionToEdit.description || ''); // Ensure description is string
+                editDateInput.value = transactionToEdit.date;
+                editModal.classList.remove('hidden');
+            } else {
+                showModal('Transação não encontrada para edição.');
+            }
+        }
+
+        /**
+         * Updates an existing transaction in Firestore.
+         * @param {string} docId - The Firestore document ID of the transaction to update.
+         * @param {string} newType - The updated type ('income' or 'expense').
+         * @param {number} newAmount - The updated amount.
+         * @param {string} newCategory - The updated category.
+         * @param {string} newDescription - The updated description.
+         * @param {string} newDate - The updated date (YYYY-MM-DD).
+         */
+        async function updateTransaction(docId, newType, newAmount, newCategory, newDescription, newDate) {
+            if (!userId) {
+                showModal("Por favor, faça login para atualizar transações.");
+                return;
+            }
+            try {
+                const transactionRef = doc(db, `artifacts/${appId}/users/${userId}/transactions`, docId);
+                await updateDoc(transactionRef, {
+                    type: newType,
+                    amount: parseFloat(newAmount),
+                    category: newCategory,
+                    description: newDescription,
+                    date: newDate
+                });
+                showModal('Transação atualizada com sucesso!');
+                hideEditModal();
+                // Data will be updated via onSnapshot listener
+            } catch (e) {
+                console.error("Erro ao atualizar transação: ", e);
+                showModal("Erro ao atualizar transação. Tente novamente.");
+            }
+        }
+
+        /**
+         * Hides the edit transaction modal.
+         */
+        function hideEditModal() {
+            editModal.classList.add('hidden');
+            editForm.reset();
+        }
+
+        /**
+         * Renders a subset of transactions (e.g., latest 2) in the main table.
+         */
+        function renderTransactions() {
+            transactionsTableBody.innerHTML = ''; // Clear existing rows
+
+            // Sort transactions by date (most recent first)
+            const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Display only the last 2 transactions
+            const transactionsToShow = sortedTransactions.slice(0, 2); // Changed slice to 2
+
+            if (transactionsToShow.length === 0) {
+                noTransactionsMessage.classList.remove('hidden');
+                return;
+            } else {
+                noTransactionsMessage.classList.add('hidden');
+            }
+
+            transactionsToShow.forEach(t => {
+                const row = transactionsTableBody.insertRow();
+                row.classList.add('bg-white', 'hover:bg-gray-50', 'transition-all', 'duration-150');
+
+                const typeCell = row.insertCell();
+                typeCell.textContent = t.type === 'income' ? 'Ganho' : 'Despesa';
+                typeCell.classList.add('font-medium', t.type === 'income' ? 'text-green-600' : 'text-red-600');
+
+                const amountCell = row.insertCell();
+                amountCell.textContent = `R$ ${t.amount.toFixed(2)}`;
+
+                const categoryCell = row.insertCell();
+                const categorySpan = document.createElement('span');
+                categorySpan.className = 'category-text-colored';
+                categorySpan.style.color = getCategoryColor(t.category); // Apply category color to text
+                categorySpan.textContent = t.category;
+                categoryCell.appendChild(categorySpan);
+
+                const descriptionCell = row.insertCell();
+                descriptionCell.textContent = String(t.description || ''); // Ensure description is always a string
+
+                const dateCell = row.insertCell();
+                dateCell.textContent = new Date(t.date).toLocaleDateString('pt-BR');
+
+                const actionsCell = row.insertCell();
+                actionsCell.classList.add('flex', 'gap-2');
+
+                const editButton = document.createElement('button');
+                editButton.innerHTML = '<i class="fas fa-edit"></i>';
+                editButton.classList.add('btn', 'bg-blue-500', 'hover:bg-blue-600', 'text-white', 'px-3', 'py-1', 'rounded-full', 'text-sm');
+                editButton.title = 'Editar Transação';
+                editButton.addEventListener('click', () => editTransaction(t.docId));
+                actionsCell.appendChild(editButton);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                deleteButton.classList.add('btn', 'btn-danger', 'px-3', 'py-1', 'rounded-full', 'text-sm');
+                deleteButton.title = 'Excluir Transação';
+                deleteButton.addEventListener('click', () => deleteTransaction(t.docId));
+                actionsCell.appendChild(deleteButton);
+            });
+        }
+
+        /**
+         * Opens the modal to view all transactions with filters.
+         */
+        function openAllTransactionsModal() {
+            allTransactionsModal.classList.remove('hidden');
+            applyFiltersAndRenderAllTransactions(); // Render all transactions with current filters
+        }
+
+        /**
+         * Closes the all transactions modal.
+         */
+        function closeAllTransactionsModal() {
+            allTransactionsModal.classList.add('hidden');
+            // Optionally reset filters here if desired, or let them persist
+            filterTypeSelect.value = '';
+            filterCategorySelect.value = '';
+            filterStartDateInput.value = '';
+            filterEndDateInput.value = '';
+        }
+
+        /**
+         * Applies filters and renders all transactions in the modal table.
+         */
+        function applyFiltersAndRenderAllTransactions() {
+            allTransactionsTableBody.innerHTML = ''; // Clear existing rows
+
+            let filteredTransactions = [...transactions]; // Start with a copy of all transactions
+
+            const filterType = filterTypeSelect.value;
+            const filterCategory = filterCategorySelect.value;
+            const filterStartDate = filterStartDateInput.value;
+            const filterEndDate = filterEndDateInput.value;
+
+            // Apply filters
+            if (filterType) {
+                filteredTransactions = filteredTransactions.filter(t => t.type === filterType);
+            }
+            if (filterCategory) {
+                filteredTransactions = filteredTransactions.filter(t => t.category === filterCategory);
+            }
+            if (filterStartDate) {
+                filteredTransactions = filteredTransactions.filter(t => new Date(t.date) >= new Date(filterStartDate));
+            }
+            if (filterEndDate) {
+                filteredTransactions = filteredTransactions.filter(t => new Date(t.date) <= new Date(filterEndDate));
+            }
+
+            // Sort filtered transactions by date (most recent first)
+            const sortedFilteredTransactions = filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (sortedFilteredTransactions.length === 0) {
+                noFilteredTransactionsMessage.classList.remove('hidden');
+                return;
+            } else {
+                noFilteredTransactionsMessage.classList.add('hidden');
+            }
+
+            sortedFilteredTransactions.forEach(t => {
+                const row = allTransactionsTableBody.insertRow();
+                row.classList.add('bg-white', 'hover:bg-gray-50', 'transition-all', 'duration-150');
+
+                const typeCell = row.insertCell();
+                typeCell.textContent = t.type === 'income' ? 'Ganho' : 'Despesa';
+                typeCell.classList.add('font-medium', t.type === 'income' ? 'text-green-600' : 'text-red-600');
+
+                const amountCell = row.insertCell();
+                amountCell.textContent = `R$ ${t.amount.toFixed(2)}`;
+
+                const categoryCell = row.insertCell();
+                const categorySpan = document.createElement('span');
+                categorySpan.className = 'category-text-colored';
+                categorySpan.style.color = getCategoryColor(t.category); // Apply category color to text
+                categorySpan.textContent = t.category;
+                categoryCell.appendChild(categorySpan);
+
+                const descriptionCell = row.insertCell();
+                descriptionCell.textContent = String(t.description || ''); // Ensure description is always a string
+
+                const dateCell = row.insertCell();
+                dateCell.textContent = new Date(t.date).toLocaleDateString('pt-BR');
+
+                const actionsCell = row.insertCell();
+                actionsCell.classList.add('flex', 'gap-2');
+
+                const editButton = document.createElement('button');
+                editButton.innerHTML = '<i class="fas fa-edit"></i>';
+                editButton.classList.add('btn', 'bg-blue-500', 'hover:bg-blue-600', 'text-white', 'px-3', 'py-1', 'rounded-full', 'text-sm');
+                editButton.title = 'Editar Transação';
+                // When editing from "All Transactions" modal, ensure it closes after edit
+                editButton.addEventListener('click', () => {
+                    hideAllTransactionsModal(); // Close this modal
+                    editTransaction(t.docId); // Open edit modal
+                });
+                actionsCell.appendChild(editButton);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                deleteButton.classList.add('btn', 'btn-danger', 'px-3', 'py-1', 'rounded-full', 'text-sm');
+                deleteButton.title = 'Excluir Transação';
+                deleteButton.addEventListener('click', () => deleteTransaction(t.docId));
+                actionsCell.appendChild(deleteButton);
+            });
+        }
+
+        // Helper to hide all transactions modal
+        function hideAllTransactionsModal() {
+            allTransactionsModal.classList.add('hidden');
+        }
+
+
+        /**
+         * Calculates and updates the financial summary (total income, expenses, balance).
+         */
+        function updateSummary() {
+            const totalIncome = transactions
+                .filter(t => t.type === 'income')
+                .reduce((sum, t) => sum + t.amount, 0);
+
+            const totalExpenses = transactions
+                .filter(t => t.type === 'expense')
+                .reduce((sum, t) => sum + t.amount, 0);
+
+            const currentBalance = totalIncome - totalExpenses;
+
+            totalIncomeSpan.textContent = `R$ ${totalIncome.toFixed(2)}`;
+            totalExpensesSpan.textContent = `R$ ${totalExpenses.toFixed(2)}`;
+            currentBalanceSpan.textContent = `R$ ${currentBalance.toFixed(2)}`;
+
+            if (currentBalance > 0) {
+                currentBalanceSpan.classList.remove('text-red-600', 'text-gray-600');
+                currentBalanceSpan.classList.add('text-blue-600');
+            } else if (currentBalance < 0) {
+                currentBalanceSpan.classList.remove('text-blue-600', 'text-gray-600');
+                currentBalanceSpan.classList.add('text-red-600');
+            } else {
+                currentBalanceSpan.classList.remove('text-blue-600', 'text-red-600');
+                currentBalanceSpan.classList.add('text-gray-600');
+            }
+        }
+
+        /**
+         * Prepares data for charts (percentages by category).
+         * @param {string} type - 'income' or 'expense'.
+         * @returns {object} - Labels, data, and percentages for display.
+         */
+        function getChartData(type) {
+            const filteredTransactions = transactions.filter(t => t.type === type);
+            const categorySums = filteredTransactions.reduce((acc, t) => {
+                acc[t.category] = (acc[t.category] || 0) + t.amount;
+                return acc;
+            }, {});
+
+            const labels = Object.keys(categorySums);
+            const data = Object.values(categorySums);
+
+            const total = data.reduce((sum, val) => sum + val, 0);
+            const percentages = data.map(val => (total > 0 ? (val / total * 100).toFixed(1) : 0));
+
+            return { labels, data, percentages };
+        }
+
+        /**
+         * Populates the percentage list for expenses in the modal.
+         */
+        function updateExpenseChartModal() {
+            expenseChartContainer.innerHTML = ''; // Clear container for text
+
+            const { labels, data, percentages } = getChartData('expense');
+
+            console.log("Expense Report Data:", { labels, data, percentages }); // Debugging line
+
+            if (data.length === 0) {
+                noExpenseDataModalMessage.classList.remove('hidden');
+                return;
+            } else {
+                noExpenseDataModalMessage.classList.add('hidden');
+            }
+
+            const listDiv = document.createElement('div');
+            listDiv.className = 'percentage-list text-left mx-auto max-w-xs';
+
+            labels.forEach((label, i) => {
+                const p = document.createElement('p');
+                p.className = 'flex items-center'; // Make paragraph a flex container
+                const colorSwatch = document.createElement('span');
+                colorSwatch.className = 'color-swatch';
+                colorSwatch.style.backgroundColor = getCategoryColor(label); // Use getCategoryColor
+                p.appendChild(colorSwatch);
+                p.appendChild(document.createTextNode(`${label}: R$ ${data[i].toFixed(2)} (${percentages[i]}%)`));
+                listDiv.appendChild(p);
+            });
+            expenseChartContainer.appendChild(listDiv);
+        }
+
+        /**
+         * Populates the percentage list for income in the modal.
+         */
+        function updateIncomeChartModal() {
+            incomeChartContainer.innerHTML = ''; // Clear container for text
+
+            const { labels, data, percentages } = getChartData('income');
+
+            console.log("Income Report Data:", { labels, data, percentages }); // Debugging line
+
+            if (data.length === 0) {
+                noIncomeDataModalMessage.classList.remove('hidden');
+                return;
+            } else {
+                noIncomeDataModalMessage.classList.add('hidden');
+            }
+
+            const listDiv = document.createElement('div');
+            listDiv.className = 'percentage-list text-left mx-auto max-w-xs';
+
+            labels.forEach((label, i) => {
+                const p = document.createElement('p');
+                p.className = 'flex items-center'; // Make paragraph a flex container
+                const colorSwatch = document.createElement('span');
+                colorSwatch.className = 'color-swatch';
+                colorSwatch.style.backgroundColor = getCategoryColor(label); // Use getCategoryColor
+                p.appendChild(colorSwatch);
+                p.appendChild(document.createTextNode(`${label}: R$ ${data[i].toFixed(2)} (${percentages[i]}%)`));
+                listDiv.appendChild(p);
+            });
+            incomeChartContainer.appendChild(listDiv);
+        }
+
+
+        /**
+         * Opens the Percentage Reports modal.
+         */
+        function openPercentageReportsModal() {
+            percentageReportsModal.classList.remove('hidden');
+            updateExpenseChartModal(); // Render percentage list
+            updateIncomeChartModal();  // Render percentage list
+        }
+
+        /**
+         * Closes the Percentage Reports modal.
+         */
+        function closePercentageReportsModal() {
+            percentageReportsModal.classList.add('hidden');
+        }
+
+
+        /**
+         * Updates all UI components based on the current data.
+         */
+        function updateUI() {
+            populateCategoryDropdowns(); // Ensure categories are always up-to-date
+            renderTransactions(); // Only latest 2
+            updateSummary();
+        }
+
+        // Event Listeners for Forms
+        incomeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const amount = document.getElementById('incomeAmount').value;
+            const category = document.getElementById('incomeCategory').value;
+            const description = incomeDescriptionInput.value;
+            const date = document.getElementById('incomeDate').value;
+
+            if (amount && category && date) {
+                await addTransaction('income', amount, category, description, date);
+                incomeForm.reset();
+                document.getElementById('incomeDate').value = new Date().toISOString().split('T')[0]; // Reset date to today
+            } else {
+                showModal('Por favor, preencha os campos obrigatórios do ganho: Valor, Categoria e Data.');
+            }
+        });
+
+        expenseForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const amount = document.getElementById('expenseAmount').value;
+            const category = document.getElementById('expenseCategory').value;
+            const description = expenseDescriptionInput.value;
+            const date = document.getElementById('expenseDate').value;
+
+            if (amount && category && date) {
+                await addTransaction('expense', amount, category, description, date);
+                expenseForm.reset();
+                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0]; // Reset date to today
+            } else {
+                showModal('Por favor, preencha os campos obrigatórios da despesa: Valor, Categoria e Data.');
+            }
+        });
+
+        // Event Listeners for Add Category Buttons (open modal)
+        addIncomeCategoryBtn.addEventListener('click', () => {
+            currentCategoryTypeToAdd = 'income';
+            addCategoryModalType.textContent = 'para Ganhos';
+            newCategoryInput.value = ''; // Clear previous input
+            addCategoryModal.classList.remove('hidden');
+            renderCustomCategoriesList(); // Update list when opening modal
+        });
+
+        addExpenseCategoryBtn.addEventListener('click', () => {
+            currentCategoryTypeToAdd = 'expense';
+            addCategoryModalType.textContent = 'para Despesas';
+            newCategoryInput.value = ''; // Clear previous input
+            addCategoryModal.classList.remove('hidden');
+            renderCustomCategoriesList(); // Update list when opening modal
+        });
+
+        closeAddCategoryModalButton.addEventListener('click', () => {
+            addCategoryModal.classList.add('hidden');
+        });
+
+        // Event Listener for Save New Category Button inside modal
+        saveNewCategoryButton.addEventListener('click', async () => {
+            const newCategory = newCategoryInput.value.trim();
+            if (!userId) {
+                showModal("Por favor, faça login para adicionar categorias.");
+                return;
+            }
+            if (newCategory) {
+                let allCurrentCategories = [];
+                let categoriesRef;
+                let successMessage = '';
+                let errorMessage = '';
+
+                if (currentCategoryTypeToAdd === 'income') {
+                    allCurrentCategories = [...predefinedIncomeCategories, ...customIncomeCategories.map(c => c.name)].map(cat => cat.toLowerCase());
+                    categoriesRef = collection(db, `artifacts/${appId}/users/${userId}/customIncomeCategories`);
+                    successMessage = `Categoria de ganho "${newCategory}" adicionada com sucesso!`;
+                    errorMessage = `A categoria de ganho "${newCategory}" já existe ou houve um erro.`;
+                } else if (currentCategoryTypeToAdd === 'expense') {
+                    allCurrentCategories = [...predefinedExpenseCategories, ...customExpenseCategories.map(c => c.name)].map(cat => cat.toLowerCase());
+                    categoriesRef = collection(db, `artifacts/${appId}/users/${userId}/customExpenseCategories`);
+                    successMessage = `Categoria de despesa "${newCategory}" adicionada com sucesso!`;
+                    errorMessage = `A categoria de despesa "${newCategory}" já existe ou houve um erro.`;
+                } else {
+                    showModal('Erro: Tipo de categoria desconhecido.');
+                    return;
+                }
+
+                if (allCurrentCategories.includes(newCategory.toLowerCase())) {
+                    showModal(errorMessage); // Category already exists
+                } else {
+                    try {
+                        await addDoc(categoriesRef, { name: newCategory });
+                        newCategoryInput.value = ''; // Clear input
+                        // addCategoryModal.classList.add('hidden'); // Keep modal open to manage categories
+                        showModal(successMessage);
+                        // populateCategoryDropdowns and renderCustomCategoriesList will be called by onSnapshot listener
+                    } catch (e) {
+                        console.error(`Erro ao adicionar categoria ${currentCategoryTypeToAdd}: `, e);
+                        showModal(`Erro ao adicionar categoria. Tente novamente. (Detalhe: ${e.message})`);
+                    }
+                }
+            } else {
+                showModal('Por favor, digite um nome para a nova categoria.');
+            }
+        });
+
+
+        cancelEditButton.addEventListener('click', hideEditModal);
+
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = editTransactionIdInput.value;
+            const newType = editTypeSelect.value;
+            const newAmount = editAmountInput.value;
+            const newCategory = editCategorySelect.value;
+            const newDescription = editDescriptionInput.value;
+            const newDate = editDateInput.value;
+
+            if (id && newType && newAmount && newCategory && newDate) {
+                await updateTransaction(id, newType, newAmount, newCategory, newDescription, newDate);
+            } else {
+                showModal('Por favor, preencha todos os campos para atualizar a transação.');
+            }
+        });
+
+        viewAllTransactionsButton.addEventListener('click', openAllTransactionsModal);
+        closeAllTransactionsModalButton.addEventListener('click', closeAllTransactionsModal);
+
+        viewChartsButton.addEventListener('click', openPercentageReportsModal);
+        closePercentageReportsModalButton.addEventListener('click', closePercentageReportsModal);
+
+
+        // Filter event listeners for "All Transactions" modal
+        filterTypeSelect.addEventListener('change', applyFiltersAndRenderAllTransactions);
+        filterCategorySelect.addEventListener('change', applyFiltersAndRenderAllTransactions);
+        filterStartDateInput.addEventListener('change', applyFiltersAndRenderAllTransactions);
+        filterEndDateInput.addEventListener('change', applyFiltersAndRenderAllTransactions);
+
+
+        // Authentication Event Listeners
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showModal("Login realizado com sucesso!");
+                loginForm.reset();
+            } catch (error) {
+                console.error("Erro ao fazer login:", error);
+                let errorMessage = "Erro ao fazer login. Verifique seu e-mail e senha.";
+                if (error.code === 'auth/user-not-found') {
+                    errorMessage = "Usuário não encontrado. Por favor, registre-se.";
+                } else if (error.code === 'auth/wrong-password') {
+                    errorMessage = "Senha incorreta.";
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = "Endereço de e-mail inválido.";
+                }
+                showModal(errorMessage);
+            }
+        });
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                showModal("Registro realizado com sucesso! Você já está logado.");
+                registerForm.reset();
+            } catch (error) {
+                console.error("Erro ao registrar:", error);
+                let errorMessage = "Erro ao registrar. Tente novamente.";
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = "Este e-mail já está em uso.";
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = "A senha é muito fraca (mínimo 6 caracteres).";
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = "Endereço de e-mail inválido.";
+                }
+                showModal(errorMessage);
+            }
+        });
+
+        logoutButton.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showModal("Você foi desconectado.");
+            } catch (error) {
+                console.error("Erro ao desconectar:", error);
+                showModal("Erro ao desconectar. Tente novamente.");
+            }
+        });
+
+        // Initialize Firebase on DOM load
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
+                    console.error("Firebase config not found or invalid. Please ensure firebaseConfig object is correctly defined.");
+                    showModal("Configuração do Firebase não encontrada. Verifique as credenciais no código.");
+                    return; // Exit if config is bad
+                }
+
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // IMPORTANT: Ensure auth is initialized before adding listener
+                if (!auth) {
+                    console.error("Firebase Auth object failed to initialize.");
+                    showModal("Erro de inicialização: Não foi possível configurar a autenticação. Recarregue a página.");
+                    return; // Exit if auth failed
+                }
+
+                // This part handles the initial authentication for the Canvas environment
+                // For local execution, it will try custom token sign-in if available, otherwise no automatic sign-in.
+                if (initialAuthToken) {
+                    try {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                        console.log("Signed in with custom token.");
+                    } catch (error) {
+                        console.error("Error signing in with custom token:", error);
+                        // showModal("Erro ao fazer login automático. Por favor, faça login manualmente."); // Removed this modal to prevent double modals
+                    }
+                }
+                // If initialAuthToken is null (e.g., local execution), no automatic sign-in is attempted here.
+                // The user will see the login/register forms by default.
+
+                // Firebase Auth State Listener (THIS MUST BE CALLED AFTER 'auth' IS DEFINED)
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        userEmailSpan.textContent = user.email;
+                        loggedInView.classList.remove('hidden');
+                        loggedOutView.classList.add('hidden');
+                        mainAppContent.classList.remove('hidden');
+                        authSection.classList.add('hidden'); // Hide auth section after login
+
+                        // Start listening for real-time transactions
+                        const q = query(collection(db, `artifacts/${appId}/users/${userId}/transactions`));
+                        onSnapshot(q, (snapshot) => {
+                            transactions = snapshot.docs.map(doc => ({ docId: doc.id, ...doc.data() }));
+                            updateUI();
+                            applyFiltersAndRenderAllTransactions(); // Also update the modal table if open
+                        }, (error) => {
+                            console.error("Erro ao ouvir transações: ", error);
+                            showModal("Erro ao carregar transações. Verifique sua conexão ou tente novamente.");
+                        });
+
+                        // Listen for custom categories (income)
+                        const incomeCategoriesQ = query(collection(db, `artifacts/${appId}/users/${userId}/customIncomeCategories`));
+                        onSnapshot(incomeCategoriesQ, (snapshot) => {
+                            customIncomeCategories = snapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
+                            populateCategoryDropdowns();
+                        }, (error) => {
+                            console.error("Erro ao ouvir categorias de ganho personalizadas: ", error);
+                        });
+
+                        // Listen for custom categories (expense)
+                        const expenseCategoriesQ = query(collection(db, `artifacts/${appId}/users/${userId}/customExpenseCategories`));
+                        onSnapshot(expenseCategoriesQ, (snapshot) => {
+                            customExpenseCategories = snapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
+                            populateCategoryDropdowns();
+                        }, (error) => {
+                            console.error("Erro ao ouvir categorias de despesa personalizadas: ", error);
+                        });
+
+
+                    } else {
+                        userId = null;
+                        loggedInView.classList.add('hidden');
+                        loggedOutView.classList.remove('hidden');
+                        mainAppContent.classList.add('hidden');
+                        authSection.classList.remove('hidden'); // Show auth section
+
+                        transactions = []; // Clear transactions if logged out
+                        customIncomeCategories = []; // Clear custom categories
+                        customExpenseCategories = []; // Clear custom categories
+                        updateUI(); // Clear UI
+                    }
+                });
+
+            } catch (error) {
+                console.error("Erro fatal na inicialização do Firebase:", error);
+                showModal("Erro grave na inicialização do aplicativo. Verifique as credenciais do Firebase.");
+            }
+
+            // Set default date to today for convenience
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('incomeDate').value = today;
+            document.getElementById('expenseDate').value = today;
+        });
+    </script>
+</body>
+</html>
