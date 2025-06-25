@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finc - Meu Gerenciador Financeiro</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         *{
@@ -29,13 +27,27 @@
             align-items: center;
             background-color: #f0f2f5; /* Match body background */
             width: 100%;
-            position: absolute;
+            position: absolute; /* Reverted to original */
             top:0;/* Align with app container, remove bottom margin */
+            /* Removed padding and box-shadow that were added */
+        }
+        /* No CSS for #logoutButtonTopRight here, original inline style takes precedence */
+        @media (max-width: 480px) { /* Mobile-specific adjustments for header */
+            .header-app {
+                padding: 0.6rem 1rem; /* Apply padding for mobile only */
+            }
+            .header-app h1 {
+                font-size: 1.75rem;
+            }
+            .header-app #logoutButtonTopRight {
+                width: 28px;
+                height: 28px;
+            }
         }
         .container {
-            max-width: 75%; /* Adjusted max-width */
-            margin: 1.1rem auto; /* Adjusted margin to fit header and body */
-            padding: 1rem; /* Reduced padding */
+            max-width: 75%; /* Reverted to original for desktop */
+            margin: 1.1rem auto; /* Reverted to original for desktop */
+            padding: 1rem; /* Original value */
             background-color: #ffffff;
             border-radius: 10px; /* Slightly smaller border-radius */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow */
@@ -43,6 +55,13 @@
             display: flex;
             flex-direction: column;
           /* Prevent internal scrolling to force fit */
+        }
+        @media (max-width: 767px) { /* Mobile-specific adjustments for container */
+            .container {
+                max-width: 95%; /* Wider on mobile screens */
+                margin: 0.8rem auto; /* Reduced margin for mobile */
+                padding: 0.5rem; /* Further reduced padding for mobile */
+            }
         }
         .input-group label {
             font-weight: 500;
@@ -138,7 +157,7 @@
             border-radius: 10px; /* Reduced border-radius */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Reduced shadow */
             text-align: center;
-            max-width: 350px; /* Reduced max width */
+            max-width: 350px; /* Reverted to original max-width */
             width: 90%;
             position: relative;
         }
@@ -231,24 +250,33 @@
             }
         }
 
+        /* Added for table horizontal scrolling - mobile specific fix */
+        .overflow-y-auto { /* This class is on parent div of tables */
+            overflow-x: auto; /* Allow horizontal scrolling for table containers */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+
         #mainAppContent{
-            height: 84vh;
+            height: 84vh; /* Keep for desktop no-scroll */
+            /* Removed overflow-y: auto from default for desktop */
+        }
+        @media (max-width: 767px) { /* Mobile-specific scrolling for main content */
+            #mainAppContent {
+                overflow-y: auto;
+                height: auto; /* Allow height to be determined by content on mobile */
+            }
         }
     </style>
 </head>
 <body class="bg-gray-100 p-4 sm:p-6">
 
     <header class="header-app">
-        <h1 class="text-3xl font-bold text-gray-800">Finc</h1> <!-- App name as logo -->
-        <button id="logoutButtonTopRight" class="btn bg-purple-500 hover:bg-purple-600 text-xs p-1 rounded-full flex items-center justify-center" style="width: 32px; height: 32px; margin-right: 32px" title="Sair">
+        <h1 class="text-3xl font-bold text-gray-800">Finc</h1> <button id="logoutButtonTopRight" class="btn bg-purple-500 hover:bg-purple-600 text-xs p-1 rounded-full flex items-center justify-center" style="width: 32px; height: 32px; margin-right: 32px" title="Sair">
             <i class="fas fa-sign-out-alt"></i>
         </button>
     </header>
 
     <div id="app" class="container">
-        <!-- The main h1 is now in the header-app element -->
-
-        <!-- Seção de Autenticação -->
         <div id="authSection" class="bg-white p-6 rounded-xl shadow-lg mb-6 border border-purple-200 flex flex-col flex-grow">
             <h2 class="text-2xl font-semibold text-purple-700 mb-4 text-center">Autenticação</h2>
             <div class="text-center text-gray-700 mb-6 px-4">
@@ -277,7 +305,6 @@
                         <button type="submit" class="btn btn-primary bg-green-500 hover:bg-green-600 w-full text-base mt-4">Entrar</button>
                     </form>
 
-                    <!-- Desktop OU separator -->
                     <div class="hidden md:flex items-center justify-center flex-shrink-0">
                         <p class="text-gray-600 text-base">OU</p>
                     </div>
@@ -299,43 +326,33 @@
                         <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-base mt-4">Registrar</button>
                     </form>
                 </div>
-                <div class="text-center text-gray-600 text-base py-4 md:hidden">OU</div> <!-- Mobile separator -->
-            </div>
+                <div class="text-center text-gray-600 text-base py-4 md:hidden">OU</div> </div>
         </div>
 
-        <!-- Conteúdo Principal do Aplicativo (visível apenas para usuários logados) -->
-        <div id="mainAppContent" class="hidden flex-grow grid grid-cols-1 md:grid-cols-2 grid-rows-[repeat(2,minmax(0,1fr))] gap-2">
-            <!-- Bloco 1 (Ganhos) - Row 1, Col 1 -->
+        <div id="mainAppContent" class="hidden flex-grow grid grid-cols-1 gap-2 md:grid-cols-2 md:grid-rows-[repeat(2,minmax(0,1fr))]">
             <div class="bg-white p-4 rounded-xl shadow-lg border border-green-200 flex flex-col justify-between">
                 <h2 class="text-xl font-semibold text-green-700 mb-3 flex items-center">
                     <i class="fas fa-plus-circle mr-2"></i> Adicionar Ganho
                 </h2>
-                <form id="incomeForm" class="space-y-3 flex-grow flex flex-col justify-between">
-                    <div class="grid grid-cols-2 gap-3">
+                <form id="incomeForm" class="space-y-3 flex flex-col md:flex-grow md:justify-between"> <div class="grid grid-cols-2 gap-3">
                         <div class="input-group">
                             <label for="incomeAmount" class="block text-sm">Valor:</label>
                             <input type="number" id="incomeAmount" step="0.01" required
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base">
                         </div>
                         <div class="input-group flex items-center">
-                            <label for="incomeCategory" class="block text-sm mr-2">Categoria:</label>
-                            <select id="incomeCategory" required
-                                    class="flex-grow rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base">
-                                <option value="">Selecione</option>
-                            </select>
+                            <label for="incomeCategory" class="block text-sm mr-2">Categoria:</label> <select id="incomeCategory" required
+                                    class="rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base md:max-w-[150px]"> <option value="">Selecione</option> </select>
                             <button type="button" id="addIncomeCategoryBtn" class="ml-2 p-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center text-sm" style="width: 32px; height: 32px;" title="Adicionar Categoria de Ganho">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="flex gap-3">
-                        <div class="input-group flex-[3]">
-                            <label for="incomeDescription" class="block text-sm">Descrição (opcional):</label>
+                    <div class="grid grid-cols-1 gap-3 md:grid-cols-[2fr_1fr]"> <div class="input-group"> <label for="incomeDescription" class="block text-sm">Descrição (opcional):</label>
                             <textarea id="incomeDescription" rows="1"
                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base"></textarea>
                         </div>
-                        <div class="input-group flex-1">
-                            <label for="incomeDate" class="block text-sm">Data:</label>
+                        <div class="input-group"> <label for="incomeDate" class="block text-sm">Data:</label>
                             <input type="date" id="incomeDate" required
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-base">
                         </div>
@@ -344,37 +361,29 @@
                 </form>
             </div>
 
-            <!-- Bloco 2 (Despesas) - Row 1, Col 2 -->
             <div class="bg-white p-4 rounded-xl shadow-lg border border-red-200 flex flex-col justify-between">
                 <h2 class="text-xl font-semibold text-red-700 mb-3 flex items-center">
                     <i class="fas fa-minus-circle mr-2"></i> Adicionar Despesa
                 </h2>
-                <form id="expenseForm" class="space-y-3 flex-grow flex flex-col justify-between">
-                    <div class="grid grid-cols-2 gap-3">
+                <form id="expenseForm" class="space-y-3 flex flex-col md:flex-grow md:justify-between"> <div class="grid grid-cols-2 gap-3">
                         <div class="input-group">
                             <label for="expenseAmount" class="block text-sm">Valor:</label>
                             <input type="number" id="expenseAmount" step="0.01" required
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base">
                         </div>
                         <div class="input-group flex items-center">
-                            <label for="expenseCategory" class="block text-sm mr-2">Categoria:</label>
-                            <select id="expenseCategory" required
-                                    class="flex-grow rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base">
-                                <option value="">Selecione</option>
-                            </select>
+                            <label for="expenseCategory" class="block text-sm mr-2">Categoria:</label> <select id="expenseCategory" required
+                                    class="rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base md:max-w-[150px]"> <option value="">Selecione</option> </select>
                             <button type="button" id="addExpenseCategoryBtn" class="ml-2 p-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center text-sm" style="width: 32px; height: 32px;" title="Adicionar Categoria de Despesa">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="flex gap-3">
-                        <div class="input-group flex-[3]">
-                            <label for="expenseDescription" class="block text-sm">Descrição (opcional):</label>
+                    <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-3"> <div class="input-group"> <label for="expenseDescription" class="block text-sm">Descrição (opcional):</label>
                             <textarea id="expenseDescription" rows="1"
                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base"></textarea>
                         </div>
-                        <div class="input-group flex-1">
-                            <label for="expenseDate" class="block text-sm">Data:</label>
+                        <div class="input-group"> <label for="expenseDate" class="block text-sm">Data:</label>
                             <input type="date" id="expenseDate" required
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50 text-base">
                         </div>
@@ -383,9 +392,7 @@
                 </form>
             </div>
 
-            <!-- Bloco 3 (Resumo Financeiro) - Row 2, Col 1 -->
-            <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-between">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
+            <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-between"> <h2 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
                     <i class="fas fa-chart-pie mr-2"></i> Resumo Financeiro
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center flex-grow">
@@ -405,9 +412,7 @@
                 <button id="viewChartsButton" class="btn btn-primary bg-blue-500 hover:bg-blue-600 w-full text-lg mt-4">Ver Relatórios em Porcentagem</button>
             </div>
 
-            <!-- Bloco 4 (Últimas Transações) - Row 2, Col 2 -->
-            <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col flex-grow">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
+            <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col flex-grow"> <h2 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
                     <i class="fas fa-list-alt mr-2"></i> Últimas Transações
                 </h2>
                 <div class="overflow-y-auto text-base flex-grow">
@@ -423,8 +428,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Latest 2 transactions will be inserted here by JavaScript -->
-                        </tbody>
+                            </tbody>
                     </table>
                     <p id="noTransactionsMessage" class="text-center text-gray-500 mt-3 text-base">Nenhuma transação registrada ainda.</p>
                 </div>
@@ -433,7 +437,6 @@
         </div>
     </div>
 
-    <!-- Custom Modal for Messages -->
     <div id="customModal" class="modal-overlay hidden">
         <div class="modal-content">
             <p id="modalMessage" class="text-lg text-gray-700 mb-6"></p>
@@ -441,7 +444,6 @@
         </div>
     </div>
 
-    <!-- Add Category Modal -->
     <div id="addCategoryModal" class="modal-overlay hidden">
         <div class="modal-content text-left">
             <button class="modal-close-btn" id="closeAddCategoryModalButton"><i class="fas fa-times"></i></button>
@@ -463,7 +465,6 @@
         </div>
     </div>
 
-    <!-- Edit Transaction Modal -->
     <div id="editModal" class="modal-overlay hidden">
         <div class="modal-content text-left">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Editar Transação</h2>
@@ -486,8 +487,7 @@
                     <label for="editCategory" class="block text-base">Categoria:</label>
                     <select id="editCategory" required
                             class="mt-2 block w-full rounded-md border-gray-300 shadow-sm text-lg p-3">
-                        <!-- Options will be populated by JavaScript -->
-                    </select>
+                        </select>
                 </div>
                 <div class="input-group">
                     <label for="editDescription" class="block text-base">Descrição (opcional):</label>
@@ -507,13 +507,11 @@
         </div>
     </div>
 
-    <!-- All Transactions Modal -->
     <div id="allTransactionsModal" class="modal-overlay hidden">
         <div class="all-transactions-modal-content">
             <button class="modal-close-btn" id="closeAllTransactionsModalButton"><i class="fas fa-times"></i></button>
             <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Todas as Transações</h2>
 
-            <!-- Filters -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
                 <div class="input-group">
                     <label for="filterType" class="block text-base">Tipo:</label>
@@ -527,8 +525,7 @@
                     <label for="filterCategory" class="block text-base">Categoria:</label>
                     <select id="filterCategory" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm text-lg p-3">
                         <option value="">Todas</option>
-                        <!-- Categories populated dynamically -->
-                    </select>
+                        </select>
                 </div>
                 <div class="input-group">
                     <label for="filterStartDate" class="block text-base">Data Início:</label>
@@ -553,15 +550,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- All transactions will be inserted here by JavaScript -->
-                    </tbody>
+                        </tbody>
                 </table>
                 <p id="noFilteredTransactionsMessage" class="text-center text-gray-500 mt-4 text-base hidden">Nenhuma transação encontrada com os filtros aplicados.</p>
             </div>
         </div>
     </div>
 
-    <!-- Percentage Reports Modal -->
     <div id="percentageReportsModal" class="modal-overlay hidden">
         <div class="charts-modal-content">
             <button class="modal-close-btn" id="closePercentageReportsModalButton"><i class="fas fa-times"></i></button>
@@ -570,15 +565,13 @@
                 <div>
                     <h3 class="text-xl font-medium text-gray-700 mb-3 text-center">Despesas por Categoria</h3>
                     <div id="expenseChartContainer" class="chart-container">
-                        <!-- Percentage list will be dynamically created here -->
-                    </div>
+                        </div>
                     <p id="noExpenseDataModal" class="text-center text-gray-500 mt-2 text-base hidden">Não há dados de despesas para exibir.</p>
                 </div>
                 <div>
                     <h3 class="text-xl font-medium text-gray-700 mb-3 text-center">Ganhos por Categoria</h3>
                     <div id="incomeChartContainer" class="chart-container">
-                        <!-- Percentage list will be dynamically created here -->
-                    </div>
+                        </div>
                     <p id="noIncomeDataModal" class="text-center text-gray-500 mt-2 text-base hidden">Não há dados de ganhos para exibir.</p>
                 </div>
             </div>
@@ -790,7 +783,7 @@
 
             // Helper to populate a single select element
             const populateSelect = (selectElement, predefinedList, customList) => {
-                selectElement.innerHTML = '<option value="">Selecione a categoria</option>';
+                selectElement.innerHTML = '<option value="">Selecione</option>'; /* Restored "Selecione" */
                 const allOptions = [...new Set([...predefinedList, ...customList.map(c => c.name)])].sort();
                 allOptions.forEach(categoryName => {
                     const option = document.createElement('option');
